@@ -1,1607 +1,4002 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Muhammad Ali Calculator</title>
 
+
+
   <style>
+
     * {
+
       box-sizing: border-box;
+
       -webkit-tap-highlight-color: transparent;
+
     }
+
+
 
     :root {
+
       --bg: #060606;
+
       --bg2: #0f0f10;
+
       --panel: rgba(255,255,255,0.05);
+
       --panel-2: rgba(255,255,255,0.08);
+
       --line: rgba(255,215,130,0.16);
+
       --text: #fffaf0;
+
       --muted: #b7ac92;
+
       --gold: #ffd67a;
+
       --gold2: #ffbf47;
+
       --gold3: #fff1c8;
+
       --darkgold: #8a6423;
+
       --green: #74dca2;
+
       --danger: #ff6f86;
+
       --shadow: 0 42px 120px rgba(0,0,0,0.55);
+
       --radius-xl: 34px;
+
       --radius-lg: 28px;
+
       --radius-md: 20px;
+
     }
+
+
 
     body {
+
       margin: 0;
+
       min-height: 100vh;
+
       padding: 20px;
+
       font-family: Inter, Arial, "Segoe UI", sans-serif;
+
       color: var(--text);
+
       background:
+
         radial-gradient(circle at 12% 14%, rgba(255,214,122,0.12), transparent 28%),
+
         radial-gradient(circle at 88% 16%, rgba(255,191,71,0.10), transparent 30%),
+
         radial-gradient(circle at 50% 100%, rgba(255,241,200,0.06), transparent 34%),
+
         linear-gradient(135deg, #050505, #0d0d0e 55%, #151311);
+
       overflow-x: hidden;
+
     }
+
+
 
     body::before {
+
       content: "";
+
       position: fixed;
+
       inset: 0;
+
       pointer-events: none;
+
       background:
+
         linear-gradient(rgba(255,215,130,0.03) 1px, transparent 1px),
+
         linear-gradient(90deg, rgba(255,215,130,0.03) 1px, transparent 1px);
+
       background-size: 46px 46px;
+
       mask-image: radial-gradient(circle at center, rgba(0,0,0,0.9), transparent 84%);
+
     }
+
+
 
     .glow-a,
+
     .glow-b {
+
       position: fixed;
+
       border-radius: 999px;
+
       filter: blur(48px);
+
       opacity: .65;
+
       pointer-events: none;
+
       z-index: 0;
+
       animation: drift 12s ease-in-out infinite alternate;
+
     }
+
+
 
     .glow-a {
+
       width: 340px;
+
       height: 340px;
+
       top: -80px;
+
       left: -80px;
+
       background: rgba(255,214,122,0.13);
+
     }
+
+
 
     .glow-b {
+
       width: 320px;
+
       height: 320px;
+
       right: -70px;
+
       top: 16%;
+
       background: rgba(255,191,71,0.10);
+
       animation-delay: 1s;
+
     }
+
+
 
     .app {
+
       position: relative;
+
       z-index: 1;
+
       width: min(1240px, 100%);
+
       margin: 0 auto;
+
       animation: pageIn .6s cubic-bezier(.2,.8,.2,1) both;
+
     }
+
+
 
     .hero {
+
       display: flex;
+
       align-items: center;
+
       justify-content: flex-start;
+
       gap: 18px;
+
       margin-bottom: 18px;
+
     }
+
+
 
     .brand {
+
       display: flex;
+
       align-items: center;
+
       gap: 14px;
+
     }
+
+
 
     .brand-badge {
+
       width: 78px;
+
       height: 78px;
+
       border-radius: 24px;
+
       display: inline-flex;
+
       align-items: center;
+
       justify-content: center;
+
       color: #16110a;
+
       background: linear-gradient(135deg, var(--gold3), var(--gold) 42%, var(--gold2));
+
       box-shadow: 0 24px 60px rgba(255,214,122,0.16);
+
       position: relative;
+
       overflow: hidden;
+
       flex: 0 0 78px;
+
       white-space: nowrap;
+
       border: 1px solid rgba(255,255,255,0.28);
+
     }
+
+
 
     .sig-main {
+
       font-family: Georgia, "Times New Roman", serif;
+
       font-size: 27px;
+
       line-height: 1;
+
       font-weight: 950;
+
       letter-spacing: 1.6px;
+
       position: relative;
+
       z-index: 1;
+
     }
+
+
 
     .sig-sub {
+
       display: none;
+
     }
+
+
 
     .brand-badge::before {
+
       content: "";
+
       position: absolute;
+
       inset: 8px;
+
       border-radius: 18px;
+
       border: 1px solid rgba(22,17,10,0.10);
+
       pointer-events: none;
+
     }
+
+
 
     .brand-badge::after,
+
     .shine::after {
+
       content: "";
+
       position: absolute;
+
       inset: 0;
+
       background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
+
       transform: translateX(-130%);
+
       animation: shine 4.8s ease-in-out infinite;
+
       pointer-events: none;
+
     }
+
+
 
     .brand h1 {
+
       margin: 0;
+
       font-size: clamp(29px, 3vw, 42px);
+
       line-height: 1;
+
       letter-spacing: -1.3px;
+
       color: var(--gold3);
+
     }
+
+
 
     .brand p {
+
       margin: 8px 0 0;
+
       color: var(--muted);
+
       font-size: 13px;
+
       line-height: 1.5;
+
     }
+
+
 
     .top-pills {
+
       display: flex;
+
       flex-wrap: wrap;
+
       gap: 10px;
+
       justify-content: flex-end;
+
     }
+
+
 
     .pill {
+
       height: 42px;
+
       padding: 0 15px;
+
       border-radius: 999px;
+
       display: inline-flex;
+
       align-items: center;
+
       gap: 10px;
+
       color: #fff7e7;
+
       background: rgba(255,255,255,0.05);
+
       border: 1px solid var(--line);
+
       backdrop-filter: blur(18px);
+
       box-shadow: 0 14px 34px rgba(0,0,0,0.18);
+
       font-size: 12px;
+
       font-weight: 900;
+
       white-space: nowrap;
+
     }
+
+
 
     .pill-dot {
+
       width: 8px;
+
       height: 8px;
+
       border-radius: 999px;
+
       background: var(--green);
+
       box-shadow: 0 0 0 6px rgba(116,220,162,0.12), 0 0 18px rgba(116,220,162,0.8);
+
       animation: pulse 1.7s ease-in-out infinite;
+
     }
+
+
 
     .workspace {
+
       display: grid;
+
       grid-template-columns: 110px minmax(0, 1.08fr) minmax(390px, .92fr);
+
       gap: 18px;
+
       min-height: 680px;
+
     }
+
+
 
     .glass {
+
       position: relative;
+
       border-radius: var(--radius-xl);
+
       background:
+
         linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)),
+
         rgba(255,255,255,0.03);
+
       border: 1px solid rgba(255,214,122,0.10);
+
       box-shadow: var(--shadow);
+
       backdrop-filter: blur(24px);
+
       overflow: hidden;
+
     }
+
+
 
     .glass::before {
+
       content: "";
+
       position: absolute;
+
       inset: 0;
+
       padding: 1px;
+
       border-radius: inherit;
+
       background: linear-gradient(145deg, rgba(255,214,122,0.30), rgba(255,255,255,0.04), rgba(255,191,71,0.24));
+
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+
       -webkit-mask-composite: xor;
+
       mask-composite: exclude;
+
       pointer-events: none;
+
     }
+
+
 
     .side-rail {
+
       padding: 18px 14px 14px;
+
       display: flex;
+
       flex-direction: column;
+
       gap: 12px;
+
       justify-content: flex-start;
+
     }
+
+
 
     .mini-logo {
+
       display: none;
+
     }
+
+
 
     .nav-btn {
+
       border: 0;
+
       min-height: 96px;
+
       border-radius: 24px;
+
       cursor: pointer;
+
       color: #f4ead5;
+
       background: rgba(255,255,255,0.04);
+
       border: 1px solid rgba(255,214,122,0.10);
+
       display: grid;
+
       place-items: center;
+
       gap: 7px;
+
       transition: .22s ease;
+
       font-weight: 900;
+
     }
+
+
 
     .nav-btn .icon {
+
       width: 42px;
+
       height: 42px;
+
       border-radius: 16px;
+
       display: grid;
+
       place-items: center;
+
       font-size: 18px;
+
       background: rgba(255,214,122,0.08);
+
       border: 1px solid rgba(255,214,122,0.08);
+
     }
+
+
 
     .nav-btn small {
+
       font-size: 11px;
+
       font-weight: 950;
+
       letter-spacing: .3px;
+
     }
+
+
 
     .nav-btn:hover {
+
       transform: translateY(-2px);
+
       border-color: rgba(255,214,122,0.25);
+
       background: rgba(255,214,122,0.08);
+
     }
+
+
 
     .nav-btn.active {
+
       color: #17110a;
+
       background: linear-gradient(135deg, var(--gold3), var(--gold2));
+
       box-shadow: 0 18px 42px rgba(255,214,122,0.12);
+
     }
+
+
 
     .nav-btn.active .icon {
+
       background: rgba(23,17,10,0.08);
+
       border-color: rgba(23,17,10,0.08);
+
     }
+
+
 
     .editor {
+
       padding: 26px;
+
       display: flex;
+
       flex-direction: column;
+
     }
+
+
 
     .panel-header {
+
       display: flex;
+
       align-items: flex-start;
+
       justify-content: space-between;
+
       gap: 14px;
+
       margin-bottom: 24px;
+
     }
+
+
 
     .panel-header strong {
+
       display: block;
+
       font-size: 24px;
+
       letter-spacing: -.6px;
+
       margin-bottom: 7px;
+
       color: var(--gold3);
+
     }
+
+
 
     .panel-header span {
+
       color: var(--muted);
+
       font-size: 13px;
+
       line-height: 1.6;
+
     }
+
+
 
     .mode-chip {
+
       padding: 9px 13px;
+
       border-radius: 16px;
+
       color: #fff7e6;
+
       background: rgba(255,214,122,0.08);
+
       border: 1px solid rgba(255,214,122,0.16);
+
       font-size: 12px;
+
       font-weight: 950;
+
       white-space: nowrap;
+
     }
+
+
 
     .tool {
+
       display: none;
+
     }
+
+
 
     .tool.active {
+
       display: block;
+
       animation: fadeUp .28s ease both;
+
     }
+
+
 
     .tool-grid {
+
       display: grid;
+
       grid-template-columns: repeat(2, minmax(0,1fr));
+
       gap: 16px;
+
     }
+
+
 
     .field {
+
       margin-bottom: 16px;
+
     }
+
+
 
     .field.full {
+
       grid-column: 1 / -1;
+
     }
+
+
 
     label {
+
       display: flex;
+
       justify-content: space-between;
+
       align-items: center;
+
       gap: 10px;
+
       margin-bottom: 9px;
+
       color: #fff5e2;
+
       font-size: 13px;
+
       font-weight: 950;
+
     }
+
+
 
     label small {
+
       color: #9f9278;
+
       font-size: 12px;
+
       font-weight: 850;
+
     }
+
+
 
     .input-wrap {
+
       position: relative;
+
       height: 62px;
+
       border-radius: 21px;
+
       background: rgba(255,255,255,0.05);
+
       border: 1px solid rgba(255,214,122,0.12);
+
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+
       overflow: hidden;
+
       transition: .22s ease;
+
     }
+
+
 
     .input-wrap::after {
+
       content: "";
+
       position: absolute;
+
       inset: auto 0 0;
+
       height: 2px;
+
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
+
       opacity: 0;
+
       transition: .22s ease;
+
     }
+
+
 
     .input-wrap:focus-within {
+
       border-color: rgba(255,214,122,0.55);
+
       box-shadow: 0 0 0 4px rgba(255,214,122,0.08), 0 18px 42px rgba(255,214,122,0.05);
+
       transform: translateY(-1px);
+
     }
+
+
 
     .input-wrap:focus-within::after {
+
       opacity: 1;
+
     }
+
+
 
     input, select {
+
       width: 100%;
+
       height: 100%;
+
       border: 0;
+
       outline: none;
+
       background: transparent;
+
       color: #fffaf0;
+
       padding: 0 18px;
+
       font-size: 18px;
+
       font-weight: 850;
+
     }
+
+
 
     input::placeholder {
+
       color: #756a56;
+
       font-weight: 700;
+
     }
+
+
 
     input[type="time"] {
+
       color-scheme: dark;
+
     }
+
+
 
     select option {
+
       background: #131313;
+
       color: white;
+
     }
+
+
 
     .chips {
+
       display: flex;
+
       flex-wrap: wrap;
+
       gap: 9px;
+
       margin-top: 4px;
+
     }
+
+
 
     .chip-btn {
+
       border: 1px solid rgba(255,214,122,0.12);
+
       background: rgba(255,255,255,0.05);
+
       color: #fff0cc;
+
       border-radius: 999px;
+
       padding: 10px 13px;
+
       font-size: 12px;
+
       font-weight: 950;
+
       cursor: pointer;
+
       transition: .18s ease;
+
     }
+
+
 
     .chip-btn:hover {
+
       transform: translateY(-2px);
+
       border-color: rgba(255,214,122,0.30);
+
       background: rgba(255,214,122,0.08);
+
     }
+
+
 
     .subsection {
+
       margin-top: 24px;
+
       padding-top: 22px;
+
       border-top: 1px solid rgba(255,214,122,0.10);
+
     }
+
+
 
     .subsection.hidden {
+
       display: none;
+
     }
+
+
 
     .subsection-head {
+
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
+
       gap: 10px;
+
       margin-bottom: 14px;
+
     }
+
+
 
     .subsection-head strong {
+
       font-size: 15px;
+
       letter-spacing: -.2px;
+
       color: var(--gold3);
+
     }
+
+
 
     .subsection-head small {
+
       color: var(--muted);
+
       font-size: 12px;
+
       font-weight: 800;
+
     }
+
+
 
     .result-column {
+
       padding: 18px;
+
       display: flex;
+
     }
+
+
 
     .result-card {
+
       width: 100%;
+
       position: relative;
+
       border-radius: 30px;
+
       padding: 24px;
+
       display: flex;
+
       flex-direction: column;
+
       overflow: hidden;
+
       background:
+
         radial-gradient(circle at 14% 10%, rgba(255,214,122,0.14), transparent 34%),
+
         radial-gradient(circle at 90% 12%, rgba(255,191,71,0.12), transparent 36%),
+
         linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
+
       border: 1px solid rgba(255,214,122,0.14);
+
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+
       transform-style: preserve-3d;
+
       transition: transform .16s ease;
+
     }
+
+
 
     .result-card::before {
+
       content: "";
+
       position: absolute;
+
       inset: 0;
+
       background:
+
         linear-gradient(rgba(255,214,122,0.03) 1px, transparent 1px),
+
         linear-gradient(90deg, rgba(255,214,122,0.03) 1px, transparent 1px);
+
       background-size: 34px 34px;
+
       mask-image: linear-gradient(to bottom, rgba(0,0,0,0.48), transparent 80%);
+
       pointer-events: none;
+
     }
+
+
 
     .result-top,
+
     .hero-amount,
+
     .kpi-grid,
+
     .copy-btn,
+
     .formula,
+
     .insight-box {
+
       position: relative;
+
       z-index: 1;
+
     }
+
+
 
     .result-top {
+
       display: flex;
+
       justify-content: space-between;
+
       align-items: flex-start;
+
       gap: 12px;
+
       margin-bottom: 18px;
+
     }
+
+
 
     .result-top span {
+
       display: block;
+
       color: rgba(255,241,200,0.58);
+
       font-size: 12px;
+
       font-weight: 950;
+
       letter-spacing: .5px;
+
       text-transform: uppercase;
+
       margin-bottom: 7px;
+
     }
+
+
 
     .result-top h2 {
+
       margin: 0;
+
       font-size: 27px;
+
       letter-spacing: -.8px;
+
       color: var(--gold3);
+
     }
+
+
 
     .result-pill {
+
       padding: 9px 13px;
+
       border-radius: 999px;
+
       background: rgba(255,214,122,0.08);
+
       border: 1px solid rgba(255,214,122,0.11);
+
       color: #fff6e1;
+
       font-size: 12px;
+
       font-weight: 950;
+
       white-space: nowrap;
+
     }
+
+
 
     .hero-amount {
+
       padding: 24px;
+
       border-radius: 28px;
+
       background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+
       border: 1px solid rgba(255,214,122,0.13);
+
       box-shadow: 0 22px 56px rgba(0,0,0,0.24);
+
       margin-bottom: 14px;
+
       overflow: hidden;
+
     }
+
+
 
     .hero-amount.shine::after {
+
       border-radius: inherit;
+
     }
+
+
 
     .amount-label {
+
       color: rgba(255,241,200,0.66);
+
       font-size: 13px;
+
       font-weight: 950;
+
       margin-bottom: 12px;
+
     }
+
+
 
     .amount {
+
       position: relative;
+
       z-index: 1;
+
       color: white;
+
       font-size: clamp(48px, 5vw, 70px);
+
       font-weight: 950;
+
       line-height: 1;
+
       letter-spacing: -2.2px;
+
       word-break: break-word;
+
       text-shadow: 0 0 34px rgba(255,214,122,0.10);
+
     }
+
+
 
     .currency {
+
       color: var(--gold);
+
     }
+
+
 
     .kpi-grid {
+
       display: grid;
+
       grid-template-columns: repeat(2, minmax(0,1fr));
+
       gap: 10px;
+
       margin-bottom: 14px;
+
     }
+
+
 
     .kpi {
+
       min-height: 92px;
+
       padding: 15px;
+
       border-radius: 21px;
+
       background: rgba(255,255,255,0.05);
+
       border: 1px solid rgba(255,214,122,0.10);
+
     }
+
+
 
     .kpi span {
+
       display: block;
+
       color: rgba(255,241,200,0.54);
+
       font-size: 12px;
+
       font-weight: 900;
+
       margin-bottom: 8px;
+
     }
+
+
 
     .kpi strong {
+
       display: block;
+
       color: #fff9ef;
+
       font-size: 18px;
+
       word-break: break-word;
+
     }
+
+
 
     .insight-box {
+
       padding: 14px 16px;
+
       border-radius: 20px;
+
       margin-bottom: 14px;
+
       background: rgba(255,214,122,0.05);
+
       border: 1px solid rgba(255,214,122,0.10);
+
       color: #f0e3c7;
+
       font-size: 13px;
+
       line-height: 1.55;
+
     }
 
+
+
     .insight-box b {
+
       color: var(--gold3);
+
     }
+
+
+
 
 
     .receipt-lines {
+
       position: relative;
+
       z-index: 1;
+
       display: none;
+
       margin: -2px 0 14px;
+
       padding: 14px 0;
+
       border-top: 1px dashed rgba(255,214,122,0.18);
+
       border-bottom: 1px dashed rgba(255,214,122,0.18);
+
     }
+
+
 
     .receipt-lines.show {
+
       display: block;
+
     }
+
+
 
     .receipt-line {
+
       display: flex;
+
       justify-content: space-between;
+
       gap: 14px;
+
       padding: 7px 0;
+
       color: rgba(255,241,200,0.68);
+
       font-size: 13px;
+
       font-weight: 850;
+
     }
+
+
 
     .receipt-line strong {
+
       color: #fff9ef;
+
       text-align: right;
+
     }
+
+
 
     .kpi.highlight {
+
       background: linear-gradient(145deg, rgba(255,214,122,0.18), rgba(255,214,122,0.07));
+
       border-color: rgba(255,214,122,0.30);
+
       box-shadow: 0 16px 36px rgba(255,214,122,0.08);
+
     }
+
+
 
     .kpi.highlight span {
+
       color: rgba(255,241,200,0.82);
+
     }
+
+
 
     .kpi.highlight strong {
+
       color: var(--gold3);
+
       font-size: 20px;
+
     }
 
 
-    .copy-btn {
+
+.receipt-launch-btn {
+      position: relative;
+      z-index: 1;
       width: 100%;
       height: 60px;
-      margin-top: auto;
-      border: 0;
+      margin: auto 0 10px;
       border-radius: 21px;
       cursor: pointer;
       color: #17110a;
-      background: linear-gradient(135deg, var(--gold3), var(--gold), var(--gold2));
+      background: linear-gradient(135deg, #fff7df, var(--gold), var(--gold2));
+      border: 1px solid rgba(255,255,255,0.24);
       font-size: 15px;
       font-weight: 950;
-      box-shadow: 0 20px 50px rgba(255,214,122,0.14);
+      box-shadow: 0 18px 46px rgba(255,214,122,0.14);
       transition: .22s ease;
     }
 
-    .copy-btn:hover {
+    .receipt-launch-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 26px 58px rgba(255,214,122,0.18);
+      box-shadow: 0 24px 54px rgba(255,214,122,0.20);
     }
 
-    .copy-btn.copied {
-      color: #052e16;
-      background: linear-gradient(135deg, #dcfce7, #86efac);
+    .action-buttons {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 10px;
     }
 
-    .formula {
-      margin-top: 12px;
-      text-align: center;
-      color: rgba(255,241,200,0.36);
-      font-size: 12px;
+    .action-buttons .copy-btn {
+      margin-top: 0;
     }
 
-    .manual-copy-box {
-      display: none;
-      position: fixed;
-      left: 50%;
-      bottom: 78px;
-      transform: translateX(-50%);
-      width: min(420px, calc(100vw - 28px));
-      padding: 14px;
-      border-radius: 18px;
-      background: rgba(18,16,13,0.98);
-      border: 1px solid rgba(255,214,122,0.14);
-      box-shadow: 0 18px 45px rgba(0,0,0,0.36);
-      backdrop-filter: blur(18px);
-      z-index: 100;
-    }
-
-    .manual-copy-box.show {
-      display: block;
-      animation: fadeUp .2s ease both;
-    }
-
-    .manual-copy-box label {
-      display: block;
-      margin: 0 0 8px;
-      color: rgba(255,241,200,0.76);
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .manual-copy-box textarea {
+    .reset-btn {
       width: 100%;
-      min-height: 72px;
-      resize: none;
-      border: 1px solid rgba(255,214,122,0.14);
-      outline: none;
-      border-radius: 14px;
-      padding: 12px;
-      color: #fff9ef;
-      background: rgba(255,255,255,0.05);
-      font-size: 14px;
-      font-weight: 800;
+      height: 60px;
+      border-radius: 21px;
+      cursor: pointer;
+      color: #fff6e1;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,214,122,0.18);
+      font-size: 15px;
+      font-weight: 950;
+      transition: .22s ease;
     }
 
-    .toast {
+    .reset-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255,214,122,0.10);
+      border-color: rgba(255,214,122,0.30);
+    }
+
+    .receipt-modal {
       position: fixed;
-      left: 50%;
-      bottom: 22px;
-      transform: translateX(-50%) translateY(20px);
-      min-width: 240px;
-      max-width: calc(100vw - 32px);
-      padding: 14px 16px;
-      border-radius: 18px;
-      color: white;
-      background: rgba(17,14,11,0.96);
-      border: 1px solid rgba(255,214,122,0.12);
-      box-shadow: 0 18px 45px rgba(0,0,0,0.34);
-      backdrop-filter: blur(18px);
+      inset: 0;
+      z-index: 1200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(16px);
+    }
+
+    .receipt-modal.show {
+      display: flex;
+      animation: fadeUp .22s ease both;
+    }
+
+    .receipt-sheet {
+      width: min(540px, 100%);
+      max-height: min(820px, calc(100vh - 36px));
+      overflow: auto;
+      border-radius: 30px;
+      padding: 24px;
+      color: #251b0d;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,249,233,0.98)),
+        #fffaf0;
+      border: 1px solid rgba(255,214,122,0.42);
+      box-shadow: 0 40px 120px rgba(0,0,0,0.55);
+    }
+
+    .receipt-sheet-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 18px;
+      border-bottom: 1px dashed rgba(73,52,20,0.28);
+    }
+
+    .receipt-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .receipt-logo {
+      width: 54px;
+      height: 54px;
+      flex: 0 0 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 17px;
+      color: #17110a;
+      background: linear-gradient(135deg, #fff1c8, #ffd67a 48%, #ffbf47);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      font-weight: 950;
+      letter-spacing: 1px;
+    }
+
+    .receipt-brand h3 {
+      margin: 0;
+      color: #24190b;
+      font-size: 21px;
+      line-height: 1.15;
+    }
+
+    .receipt-brand p {
+      margin: 5px 0 0;
+      color: #7a6542;
+      font-size: 12px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+    }
+
+    .receipt-number {
+      color: #8b6c32;
+      font-size: 11px;
+      font-weight: 950;
+      text-align: right;
+    }
+
+    .receipt-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+      padding: 16px 0;
+      border-bottom: 1px dashed rgba(73,52,20,0.22);
+    }
+
+    .receipt-meta-item,
+    .receipt-detail-row {
       font-size: 13px;
+    }
+
+    .receipt-meta-item span,
+    .receipt-detail-row span {
+      display: block;
+      color: #8b7654;
+      font-size: 11px;
+      font-weight: 850;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: .45px;
+    }
+
+    .receipt-meta-item strong,
+    .receipt-detail-row strong {
+      color: #2d210f;
+      font-size: 14px;
+    }
+
+    .receipt-details {
+      display: grid;
+      gap: 12px;
+      padding: 18px 0;
+    }
+
+    .receipt-detail-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .receipt-detail-row span {
+      margin: 0;
+    }
+
+    .receipt-detail-row strong {
+      text-align: right;
+    }
+
+    .receipt-total-box {
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #251b0e, #3a2b14);
+      color: white;
+      box-shadow: 0 18px 40px rgba(49,35,15,0.18);
+    }
+
+    .receipt-total-box span {
+      display: block;
+      color: #dec99c;
+      font-size: 11px;
       font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-bottom: 7px;
+    }
+
+    .receipt-total-box strong {
+      display: block;
+      color: #fff2c9;
+      font-size: 34px;
+      line-height: 1;
+      word-break: break-word;
+    }
+
+    .receipt-note {
+      margin: 16px 0 0;
+      color: #806b49;
+      font-size: 12px;
+      line-height: 1.6;
       text-align: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: .25s ease;
-      z-index: 99;
     }
 
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
+    .receipt-modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 10px;
+      margin-top: 18px;
     }
 
-    .toast.error {
-      background: rgba(255,111,134,0.95);
-      border-color: rgba(255,111,134,0.15);
+    .receipt-modal-actions button {
+      min-height: 50px;
+      padding: 0 14px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 950;
+      transition: .18s ease;
     }
 
-    @keyframes pageIn {
-      from { opacity: 0; transform: translateY(20px) scale(.985); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+    .receipt-modal-actions button:hover {
+      transform: translateY(-1px);
     }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
+    .receipt-copy-btn,
+    .receipt-close-btn {
+      color: #3a2a13;
+      background: #fff8e8;
+      border: 1px solid rgba(84,61,24,0.16);
     }
 
-    @keyframes pulse {
-      0%,100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.45); opacity: .65; }
+    .receipt-print-btn {
+      color: #17110a;
+      background: linear-gradient(135deg, #fff1c8, #ffd67a, #ffbf47);
+      border: 0;
     }
 
-    @keyframes drift {
-      from { transform: translate(0,0) scale(1); }
-      to { transform: translate(18px,-22px) scale(1.06); }
-    }
-
-    @keyframes shine {
-      0% { transform: translateX(-130%); }
-      55%,100% { transform: translateX(130%); }
-    }
-
-    @media (max-width: 1080px) {
-      .workspace {
-        grid-template-columns: 100px 1fr;
-      }
-      .result-column {
-        grid-column: 1 / -1;
-        min-height: 470px;
-      }
-    }
-
-
-    @media (max-width: 760px) {
-      body {
-        padding: 14px;
-        padding-bottom: calc(108px + env(safe-area-inset-bottom));
-      }
-
-      .side-rail {
-        position: fixed !important;
-        left: 12px;
-        right: 12px;
-        bottom: calc(12px + env(safe-area-inset-bottom));
-        top: auto;
-        width: auto;
-        margin: 0;
-        z-index: 999;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-        padding: 8px;
-        border-radius: 24px;
-        background: rgba(12,10,8,0.96);
-        border: 1px solid rgba(255,214,122,0.14);
-        box-shadow: 0 22px 60px rgba(0,0,0,0.48);
-        backdrop-filter: blur(20px);
-      }
-
-      .side-rail .mini-logo {
-        display: none;
-      }
-
-      .side-rail .nav-btn {
-        min-height: 58px;
-        border-radius: 18px;
-      }
-
-      .side-rail .nav-btn .icon {
-        display: none;
-      }
-    }
-
-
-    @media (max-width: 760px) {
-      .hero {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .top-pills {
-        justify-content: flex-start;
-      }
-
-      .workspace {
-        grid-template-columns: 1fr;
-      }
-
-      .mini-logo {
-        height: 72px;
-      }
-
-      .tool-grid,
-      .kpi-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .editor,
-      .result-column {
-        padding: 18px;
-      }
-
-      .amount {
-        font-size: 42px;
-      }
+    .receipt-close-btn {
+      grid-column: 1 / -1;
     }
 
     @media (max-width: 520px) {
-      .brand-badge {
-        width: 64px;
-        height: 64px;
-        border-radius: 20px;
-        flex: 0 0 64px;
+      .receipt-sheet {
+        padding: 18px;
+        border-radius: 24px;
       }
+
+      .receipt-meta,
+      .receipt-modal-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .receipt-close-btn {
+        grid-column: auto;
+      }
+
+      .receipt-detail-row {
+        align-items: flex-start;
+      }
+    }
+
+    .copy-btn {
+
+      width: 100%;
+
+      height: 60px;
+
+      margin-top: auto;
+
+      border: 0;
+
+      border-radius: 21px;
+
+      cursor: pointer;
+
+      color: #17110a;
+
+      background: linear-gradient(135deg, var(--gold3), var(--gold), var(--gold2));
+
+      font-size: 15px;
+
+      font-weight: 950;
+
+      box-shadow: 0 20px 50px rgba(255,214,122,0.14);
+
+      transition: .22s ease;
+
+    }
+
+
+
+    .copy-btn:hover {
+
+      transform: translateY(-2px);
+
+      box-shadow: 0 26px 58px rgba(255,214,122,0.18);
+
+    }
+
+
+
+    .copy-btn.copied {
+
+      color: #052e16;
+
+      background: linear-gradient(135deg, #dcfce7, #86efac);
+
+    }
+
+
+
+    .formula {
+
+      margin-top: 12px;
+
+      text-align: center;
+
+      color: rgba(255,241,200,0.36);
+
+      font-size: 12px;
+
+    }
+
+
+
+    .manual-copy-box {
+
+      display: none;
+
+      position: fixed;
+
+      left: 50%;
+
+      bottom: 78px;
+
+      transform: translateX(-50%);
+
+      width: min(420px, calc(100vw - 28px));
+
+      padding: 14px;
+
+      border-radius: 18px;
+
+      background: rgba(18,16,13,0.98);
+
+      border: 1px solid rgba(255,214,122,0.14);
+
+      box-shadow: 0 18px 45px rgba(0,0,0,0.36);
+
+      backdrop-filter: blur(18px);
+
+      z-index: 100;
+
+    }
+
+
+
+    .manual-copy-box.show {
+
+      display: block;
+
+      animation: fadeUp .2s ease both;
+
+    }
+
+
+
+    .manual-copy-box label {
+
+      display: block;
+
+      margin: 0 0 8px;
+
+      color: rgba(255,241,200,0.76);
+
+      font-size: 12px;
+
+      font-weight: 900;
+
+    }
+
+
+
+    .manual-copy-box textarea {
+
+      width: 100%;
+
+      min-height: 72px;
+
+      resize: none;
+
+      border: 1px solid rgba(255,214,122,0.14);
+
+      outline: none;
+
+      border-radius: 14px;
+
+      padding: 12px;
+
+      color: #fff9ef;
+
+      background: rgba(255,255,255,0.05);
+
+      font-size: 14px;
+
+      font-weight: 800;
+
+    }
+
+
+
+    .toast {
+
+      position: fixed;
+
+      left: 50%;
+
+      bottom: 22px;
+
+      transform: translateX(-50%) translateY(20px);
+
+      min-width: 240px;
+
+      max-width: calc(100vw - 32px);
+
+      padding: 14px 16px;
+
+      border-radius: 18px;
+
+      color: white;
+
+      background: rgba(17,14,11,0.96);
+
+      border: 1px solid rgba(255,214,122,0.12);
+
+      box-shadow: 0 18px 45px rgba(0,0,0,0.34);
+
+      backdrop-filter: blur(18px);
+
+      font-size: 13px;
+
+      font-weight: 900;
+
+      text-align: center;
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: .25s ease;
+
+      z-index: 99;
+
+    }
+
+
+
+    .toast.show {
+
+      opacity: 1;
+
+      transform: translateX(-50%) translateY(0);
+
+    }
+
+
+
+    .toast.error {
+
+      background: rgba(255,111,134,0.95);
+
+      border-color: rgba(255,111,134,0.15);
+
+    }
+
+
+
+    @keyframes pageIn {
+
+      from { opacity: 0; transform: translateY(20px) scale(.985); }
+
+      to { opacity: 1; transform: translateY(0) scale(1); }
+
+    }
+
+
+
+    @keyframes fadeUp {
+
+      from { opacity: 0; transform: translateY(8px); }
+
+      to { opacity: 1; transform: translateY(0); }
+
+    }
+
+
+
+    @keyframes pulse {
+
+      0%,100% { transform: scale(1); opacity: 1; }
+
+      50% { transform: scale(1.45); opacity: .65; }
+
+    }
+
+
+
+    @keyframes drift {
+
+      from { transform: translate(0,0) scale(1); }
+
+      to { transform: translate(18px,-22px) scale(1.06); }
+
+    }
+
+
+
+    @keyframes shine {
+
+      0% { transform: translateX(-130%); }
+
+      55%,100% { transform: translateX(130%); }
+
+    }
+
+
+
+    @media (max-width: 1080px) {
+
+      .workspace {
+
+        grid-template-columns: 100px 1fr;
+
+      }
+
+      .result-column {
+
+        grid-column: 1 / -1;
+
+        min-height: 470px;
+
+      }
+
+    }
+
+
+
+
+
+    @media (max-width: 760px) {
+
+      body {
+
+        padding: 14px;
+
+        padding-bottom: calc(108px + env(safe-area-inset-bottom));
+
+      }
+
+
+
+      .side-rail {
+
+        position: fixed !important;
+
+        left: 12px;
+
+        right: 12px;
+
+        bottom: calc(12px + env(safe-area-inset-bottom));
+
+        top: auto;
+
+        width: auto;
+
+        margin: 0;
+
+        z-index: 999;
+
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 8px;
+
+        padding: 8px;
+
+        border-radius: 24px;
+
+        background: rgba(12,10,8,0.96);
+
+        border: 1px solid rgba(255,214,122,0.14);
+
+        box-shadow: 0 22px 60px rgba(0,0,0,0.48);
+
+        backdrop-filter: blur(20px);
+
+      }
+
+
+
+      .side-rail .mini-logo {
+
+        display: none;
+
+      }
+
+
+
+      .side-rail .nav-btn {
+
+        min-height: 58px;
+
+        border-radius: 18px;
+
+      }
+
+
+
+      .side-rail .nav-btn .icon {
+
+        display: none;
+
+      }
+
+    }
+
+
+
+
+
+    @media (max-width: 760px) {
+
+      .hero {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+      }
+
+
+
+      .top-pills {
+
+        justify-content: flex-start;
+
+      }
+
+
+
+      .workspace {
+
+        grid-template-columns: 1fr;
+
+      }
+
+
+
+      .mini-logo {
+
+        height: 72px;
+
+      }
+
+
+
+      .tool-grid,
+
+      .kpi-grid {
+
+        grid-template-columns: 1fr;
+
+      }
+
+
+
+      .editor,
+
+      .result-column {
+
+        padding: 18px;
+
+      }
+
+
+
+      .amount {
+
+        font-size: 42px;
+
+      }
+
+    }
+
+
+
+    @media (max-width: 520px) {
+
+      .brand-badge {
+
+        width: 64px;
+
+        height: 64px;
+
+        border-radius: 20px;
+
+        flex: 0 0 64px;
+
+      }
+
+
 
       .sig-main {
+
         font-size: 23px;
+
       }
+
+
 
       .sig-sub {
+
         display: none;
+
       }
+
+
 
       .brand h1 {
+
         font-size: 24px;
+
       }
+
+
 
       .nav-btn {
+
         min-height: 56px;
+
       }
+
+
 
       .panel-header {
+
         display: block;
+
       }
+
+
 
       .mode-chip {
+
         display: inline-block;
+
         margin-top: 12px;
+
       }
 
+
+
       .pill {
+
         width: 100%;
+
         justify-content: center;
+
       }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="glow-a"></div>
+
+  <div class="glow-b"></div>
+
+
+
+  <main class="app">
+
+    <header class="hero">
+
+      <div class="brand">
+
+        <div class="brand-badge"><span class="sig-main">MA</span></div>
+
+        <div>
+
+          <h1>Muhammad Ali Calculator</h1>
+
+          <p>Premium calculator interface with clean styling, separate tools, and a polished client-facing presentation.</p>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+
+    <section class="workspace">
+
+      <aside class="glass side-rail">
+
+
+
+        <button class="nav-btn active" data-mode="minutes" type="button">
+
+          <span class="icon">⏱</span>
+
+          <small>Hrs &amp; Min</small>
+
+        </button>
+
+
+
+        <button class="nav-btn" data-mode="time" type="button">
+
+          <span class="icon">⌚</span>
+
+          <small>Time Range</small>
+
+        </button>
+
+
+
+        <button class="nav-btn" data-mode="percentage" type="button">
+
+          <span class="icon">%</span>
+
+          <small>Percentage</small>
+
+        </button>
+
+      </aside>
+
+
+
+      <section class="glass editor">
+
+        <div class="panel-header">
+
+          <div>
+
+            <strong id="panelTitle">Hours &amp; Minutes Calculator</strong>
+
+            <span id="panelDesc">Enter hours and minutes, then add hourly rate and currency. The result updates live.</span>
+
+          </div>
+
+          <div class="mode-chip" id="panelChip">Charges</div>
+
+        </div>
+
+
+
+        <div class="tool active" id="minutesTool">
+
+          <div class="tool-grid">
+
+            <div class="field">
+
+              <label for="hours">
+
+                <span>Hours</span>
+
+                <small>0 or more</small>
+
+              </label>
+
+              <div class="input-wrap">
+
+                <input id="hours" type="number" min="0" step="1" placeholder="Example: 1" inputmode="numeric" />
+
+              </div>
+
+            </div>
+
+
+
+            <div class="field">
+
+              <label for="minutes">
+
+                <span>Minutes</span>
+
+                <small>0–59</small>
+
+              </label>
+
+              <div class="input-wrap">
+
+                <input id="minutes" type="number" min="0" max="59" step="1" placeholder="Example: 30" inputmode="numeric" />
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="chips">
+
+            <button class="chip-btn" type="button" data-add-minutes="15">+15 min</button>
+
+            <button class="chip-btn" type="button" data-add-minutes="30">+30 min</button>
+
+            <button class="chip-btn" type="button" data-add-minutes="60">+1 hour</button>
+
+            <button class="chip-btn" type="button" data-add-minutes="120">+2 hours</button>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="tool" id="timeTool">
+
+          <div class="tool-grid">
+
+            <div class="field">
+
+              <label for="startTime">
+
+                <span>Start Time</span>
+
+                <small>From</small>
+
+              </label>
+
+              <div class="input-wrap">
+
+                <input id="startTime" type="time" />
+
+              </div>
+
+            </div>
+
+
+
+            <div class="field">
+
+              <label for="endTime">
+
+                <span>End Time</span>
+
+                <small>To</small>
+
+              </label>
+
+              <div class="input-wrap">
+
+                <input id="endTime" type="time" />
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="tool" id="percentageTool">
+
+          <div class="tool-grid">
+
+            <div class="field">
+
+              <label for="percentTotal">
+
+                <span>Total Amount</span>
+
+                <small>Total</small>
+
+              </label>
+
+              <div class="input-wrap">
+
+                <input id="percentTotal" type="number" min="0" step="0.01" placeholder="Example: 12000" inputmode="decimal" />
+
+              </div>
+
+            </div>
+
+
+
+            <div class="field">
+
+              <label for="percentValue">
+
+                <span>Percentage</span>
+
+                <small>%</small>
+
+              </label>
+
+              <div class="input-wrap">
+
+                <input id="percentValue" type="number" min="0" step="0.01" placeholder="Example: 2 or 3" inputmode="decimal" />
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="chips">
+
+            <button class="chip-btn" type="button" data-percent="1">1%</button>
+
+            <button class="chip-btn" type="button" data-percent="2">2%</button>
+
+            <button class="chip-btn" type="button" data-percent="3">3%</button>
+
+            <button class="chip-btn" type="button" data-percent="5">5%</button>
+
+            <button class="chip-btn" type="button" data-percent="10">10%</button>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="subsection" id="billingSection">
+
+          <div class="subsection-head">
+
+            <strong>Billing Configuration</strong>
+
+            <small>Used for Minutes and Time Range</small>
+
+          </div>
+
+
+
+          <div class="tool-grid">
+
+            <div class="field">
+
+              <label for="rate">
+
+                <span>Hourly Rate</span>
+
+                <small>Rate / Hour</small>
+
+              </label>
+
+              <div class="input-wrap">
+
+                <input id="rate" type="number" min="0" step="0.01" value="50" placeholder="Example: 50" inputmode="decimal" />
+
+              </div>
+
+            </div>
+
+
+
+            <div class="field">
+
+              <label for="currency">
+
+                <span>Currency</span>
+
+                <small>Currency</small>
+
+              </label>
+
+              <div class="input-wrap">
+
+                <select id="currency">
+
+                  <option value="$" selected>$ (USD)</option>
+
+                  <option value="Rs">Rs (PKR)</option>
+
+                  <option value="€">€ (EUR)</option>
+
+                  <option value="£">£ (GBP)</option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <section class="glass result-column">
+
+        <div class="result-card" id="resultCard">
+
+          <div class="result-top">
+
+            <div>
+
+              <span>Live Preview</span>
+
+              <h2 id="summaryTitle">Charges Result</h2>
+
+            </div>
+
+            <div class="result-pill" id="modePill">Minutes</div>
+
+          </div>
+
+
+
+          <div class="hero-amount shine">
+
+            <div class="amount-label" id="amountLabel">Total Charges</div>
+
+            <div class="amount">
+
+              <span class="currency" id="currencyOut">$</span>
+
+              <span id="mainAmount">0.00</span>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="kpi-grid">
+
+            <div class="kpi">
+
+              <span id="k1Label">Duration</span>
+
+              <strong id="k1Value">0.00 h</strong>
+
+            </div>
+
+
+
+            <div class="kpi">
+
+              <span id="k2Label">Total Minutes</span>
+
+              <strong id="k2Value">0 min</strong>
+
+            </div>
+
+
+
+            <div class="kpi">
+
+              <span id="k3Label">Hourly Rate</span>
+
+              <strong id="k3Value">$ 0.00</strong>
+
+            </div>
+
+
+
+            <div class="kpi">
+
+              <span id="k4Label">Mode</span>
+
+              <strong id="k4Value">Minutes</strong>
+
+            </div>
+
+          </div>
+
+
+
+
+
+          <div class="receipt-lines show" id="receiptLines">
+
+            <div class="receipt-line">
+
+              <span id="receiptLine1Label">Calculation</span>
+
+              <strong id="receiptLine1Value">Minutes Billing</strong>
+
+            </div>
+
+            <div class="receipt-line">
+
+              <span id="receiptLine2Label">Prepared For</span>
+
+              <strong id="receiptLine2Value">Muhammad Ali</strong>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="insight-box" id="insightBox">
+
+            <b>Status:</b> Ready for billing calculation. Fill in the fields to see the live result.
+
+          </div>
+
+
+
+          <button id="receiptBtn" class="receipt-launch-btn" type="button">Generate Receipt</button>
+
+          <div class="action-buttons">
+            <button id="resetBtn" class="reset-btn" type="button">Reset</button>
+            <button id="copyBtn" class="copy-btn" type="button">Copy Charges</button>
+          </div>
+
+          <div class="formula" id="formulaText">Total Time = (Hours × 60) + Minutes</div>
+
+        </div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+
+
+  <div class="receipt-modal" id="receiptModal" aria-hidden="true">
+    <div class="receipt-sheet" role="dialog" aria-modal="true" aria-labelledby="receiptModalTitle">
+      <div class="receipt-sheet-head">
+        <div class="receipt-brand">
+          <div class="receipt-logo">MA</div>
+          <div>
+            <h3 id="receiptModalTitle">Muhammad Ali</h3>
+            <p>Billing Receipt</p>
+          </div>
+        </div>
+        <div class="receipt-number" id="receiptNumber">Receipt</div>
+      </div>
+
+      <div class="receipt-meta">
+        <div class="receipt-meta-item">
+          <span>Date</span>
+          <strong id="receiptDate">—</strong>
+        </div>
+        <div class="receipt-meta-item">
+          <span>Calculation</span>
+          <strong id="receiptMode">—</strong>
+        </div>
+      </div>
+
+      <div class="receipt-details" id="receiptDetails"></div>
+
+      <div class="receipt-total-box">
+        <span id="receiptTotalLabel">Total</span>
+        <strong id="receiptTotal">0.00</strong>
+      </div>
+
+      <p class="receipt-note">Generated with Muhammad Ali Calculator</p>
+
+      <div class="receipt-modal-actions">
+        <button id="receiptCopyBtn" class="receipt-copy-btn" type="button">Copy Receipt</button>
+        <button id="receiptPrintBtn" class="receipt-print-btn" type="button">Print / Save PDF</button>
+        <button id="receiptCloseBtn" class="receipt-close-btn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="manual-copy-box" id="manualCopyBox">
+
+    <label for="manualCopyText">Copy manually if browser blocks clipboard:</label>
+
+    <textarea id="manualCopyText" readonly></textarea>
+
+  </div>
+
+
+
+  <div class="toast" id="toast"></div>
+
+
+
+  <script>
+
+    const navButtons = document.querySelectorAll(".nav-btn");
+
+
+
+    const minutesTool = document.getElementById("minutesTool");
+
+    const timeTool = document.getElementById("timeTool");
+
+    const percentageTool = document.getElementById("percentageTool");
+
+    const billingSection = document.getElementById("billingSection");
+
+
+
+    const panelTitle = document.getElementById("panelTitle");
+
+    const panelDesc = document.getElementById("panelDesc");
+
+    const panelChip = document.getElementById("panelChip");
+
+
+
+    const hoursInput = document.getElementById("hours");
+
+    const minutesInput = document.getElementById("minutes");
+
+    const startTimeInput = document.getElementById("startTime");
+
+    const endTimeInput = document.getElementById("endTime");
+
+    const rateInput = document.getElementById("rate");
+
+    const currencyInput = document.getElementById("currency");
+
+    const percentTotalInput = document.getElementById("percentTotal");
+
+    const percentValueInput = document.getElementById("percentValue");
+
+
+
+    const summaryTitle = document.getElementById("summaryTitle");
+
+    const modePill = document.getElementById("modePill");
+
+    const amountLabel = document.getElementById("amountLabel");
+
+    const currencyOut = document.getElementById("currencyOut");
+
+    const mainAmount = document.getElementById("mainAmount");
+
+
+
+    const k1Label = document.getElementById("k1Label");
+
+    const k1Value = document.getElementById("k1Value");
+
+    const k2Label = document.getElementById("k2Label");
+
+    const k2Value = document.getElementById("k2Value");
+
+    const k3Label = document.getElementById("k3Label");
+
+    const k3Value = document.getElementById("k3Value");
+
+    const k4Label = document.getElementById("k4Label");
+
+    const k4Value = document.getElementById("k4Value");
+
+
+
+    const formulaText = document.getElementById("formulaText");
+
+    const insightBox = document.getElementById("insightBox");
+
+    const receiptLines = document.getElementById("receiptLines");
+
+    const receiptLine1Label = document.getElementById("receiptLine1Label");
+
+    const receiptLine1Value = document.getElementById("receiptLine1Value");
+
+    const receiptLine2Label = document.getElementById("receiptLine2Label");
+
+    const receiptLine2Value = document.getElementById("receiptLine2Value");
+
+    const copyBtn = document.getElementById("copyBtn");
+
+    const resetBtn = document.getElementById("resetBtn");
+    const receiptBtn = document.getElementById("receiptBtn");
+    const receiptModal = document.getElementById("receiptModal");
+    const receiptNumber = document.getElementById("receiptNumber");
+    const receiptDate = document.getElementById("receiptDate");
+    const receiptMode = document.getElementById("receiptMode");
+    const receiptDetails = document.getElementById("receiptDetails");
+    const receiptTotalLabel = document.getElementById("receiptTotalLabel");
+    const receiptTotal = document.getElementById("receiptTotal");
+    const receiptCopyBtn = document.getElementById("receiptCopyBtn");
+    const receiptPrintBtn = document.getElementById("receiptPrintBtn");
+    const receiptCloseBtn = document.getElementById("receiptCloseBtn");
+
+    const toast = document.getElementById("toast");
+
+    const manualCopyBox = document.getElementById("manualCopyBox");
+
+    const manualCopyText = document.getElementById("manualCopyText");
+
+    const resultCard = document.getElementById("resultCard");
+
+
+
+    let mode = "minutes";
+
+    let copyText = "$ 0.00";
+
+    let toastTimer = null;
+    let receiptText = "";
+
+
+
+
+
+    function updateCopyButtonText() {
+
+      if (mode === "percentage") {
+
+        copyBtn.textContent = "Copy Percentage Details";
+
+      } else {
+
+        copyBtn.textContent = "Copy Charges Details";
+
+      }
+
+    }
+
+
+
+    function clearHighlights() {
+
+      [k1Value.parentElement, k2Value.parentElement, k3Value.parentElement, k4Value.parentElement].forEach((el) => {
+
+        el.classList.remove("highlight");
+
+      });
+
+    }
+
+
+
+
+
+    function showToast(message, type = "success") {
+
+      clearTimeout(toastTimer);
+
+      toast.textContent = message;
+
+      toast.classList.toggle("error", type === "error");
+
+      toast.classList.add("show");
+
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 1500);
+
+    }
+
+
+
+    function setMode(nextMode) {
+
+      mode = nextMode;
+
+
+
+      navButtons.forEach((btn) => {
+
+        btn.classList.toggle("active", btn.dataset.mode === mode);
+
+      });
+
+
+
+      minutesTool.classList.toggle("active", mode === "minutes");
+
+      timeTool.classList.toggle("active", mode === "time");
+
+      percentageTool.classList.toggle("active", mode === "percentage");
+
+      billingSection.classList.toggle("hidden", mode === "percentage");
+
+
+
+      if (mode === "minutes") {
+
+        panelTitle.textContent = "Hours & Minutes Calculator";
+
+        panelDesc.textContent = "Enter hours and minutes, then add hourly rate and currency. The result updates live.";
+
+        panelChip.textContent = "Charges";
+
+      }
+
+
+
+      if (mode === "time") {
+
+        panelTitle.textContent = "Time Range Calculator";
+
+        panelDesc.textContent = "Select start and end time. Overnight time ranges are supported automatically.";
+
+        panelChip.textContent = "Time Range";
+
+      }
+
+
+
+      if (mode === "percentage") {
+
+        panelTitle.textContent = "Percentage Calculator";
+
+        panelDesc.textContent = "Enter total amount and percentage. Rate and currency are not used in this mode.";
+
+        panelChip.textContent = "Percentage";
+
+      }
+
+
+
+      updateCopyButtonText();
+
+      calculate();
+
+    }
+
+
+
+    function parseTimeToMinutes(value) {
+
+      if (!value) return null;
+
+      const parts = value.split(":");
+
+      if (parts.length < 2) return null;
+
+
+
+      const hours = Number(parts[0]);
+
+      const minutes = Number(parts[1]);
+
+
+
+      if (!Number.isFinite(hours) || !Number.isFinite(minutes)) return null;
+
+      return hours * 60 + minutes;
+
+    }
+
+
+
+    function setHoursMinutesFromTotal(totalMinutes) {
+      const safeTotal = Math.max(0, Math.round(totalMinutes));
+      hoursInput.value = Math.floor(safeTotal / 60);
+      minutesInput.value = safeTotal % 60;
+    }
+
+    function addMinutesToDuration(extraMinutes) {
+      const hours = Math.max(0, Number(hoursInput.value) || 0);
+      const minutes = Math.min(59, Math.max(0, Number(minutesInput.value) || 0));
+      const currentTotal = (hours * 60) + minutes;
+      setHoursMinutesFromTotal(currentTotal + extraMinutes);
+      setMode("minutes");
+    }
+
+
+
+    function getDurationMinutes() {
+
+      if (mode === "minutes") {
+
+        const hoursText = hoursInput.value.trim();
+
+        const minutesText = minutesInput.value.trim();
+
+        if (hoursText === "" && minutesText === "") return null;
+
+
+
+        const hours = hoursText === "" ? 0 : Number(hoursText);
+
+        const minutes = minutesText === "" ? 0 : Number(minutesText);
+
+
+
+        if (
+          !Number.isFinite(hours) ||
+          !Number.isFinite(minutes) ||
+          hours < 0 ||
+          minutes < 0 ||
+          minutes > 59
+        ) return NaN;
+
+
+
+        return (hours * 60) + minutes;
+
+      }
+
+
+
+      const start = parseTimeToMinutes(startTimeInput.value);
+
+      const end = parseTimeToMinutes(endTimeInput.value);
+
+
+
+      if (start === null || end === null) return null;
+
+
+
+      let duration = end - start;
+
+      if (duration < 0) duration += 1440;
+
+      return duration;
+
+    }
+
+
+
+    function setBillingOutput(currency, amount, durationMinutes, rate) {
+
+      summaryTitle.textContent = "Charges Result";
+
+      modePill.textContent = mode === "minutes" ? "Hrs + Min" : "Time Range";
+
+      amountLabel.textContent = "Total Charges";
+
+      currencyOut.style.display = "inline";
+
+      currencyOut.textContent = currency;
+
+      mainAmount.textContent = amount.toFixed(2);
+
+
+
+      k1Label.textContent = "Duration";
+
+      k1Value.textContent = formatReceiptDuration(durationMinutes);
+
+
+
+      k2Label.textContent = "Total Minutes";
+
+      k2Value.textContent = Math.round(durationMinutes) + " min";
+
+
+
+      k3Label.textContent = "Hourly Rate";
+
+      k3Value.textContent = currency + " " + rate.toFixed(2);
+
+
+
+      k4Label.textContent = "Mode";
+
+      k4Value.textContent = mode === "minutes" ? "Hours & Minutes" : "Time Range";
+
+
+
+      formulaText.textContent = mode === "minutes"
+        ? "Total Time = (Hours × 60) + Minutes • Charges = Duration × Hourly Rate"
+        : "Charges = Duration Hours × Hourly Rate";
+
+      insightBox.innerHTML = "<b>Status:</b> Result is ready. You can copy the final amount instantly.";
+
+      receiptLines.classList.add("show");
+
+      receiptLine1Label.textContent = "Calculation";
+
+      receiptLine1Value.textContent = mode === "minutes" ? "Hours & Minutes Billing" : "Time Range Billing";
+
+      receiptLine2Label.textContent = "Prepared For";
+
+      receiptLine2Value.textContent = "Muhammad Ali";
+
+      clearHighlights();
+
+      const durationText = formatReceiptDuration(durationMinutes);
+      const totalMinutesText = Math.round(durationMinutes) + " min";
+      const rateTextForCopy = currency + " " + rate.toFixed(2) + " / hour";
+      const totalTextForCopy = currency + " " + amount.toFixed(2);
+
+      if (mode === "time") {
+        copyText =
+          "MUHAMMAD ALI CALCULATOR\n" +
+          "\nCalculation: Time Range Billing" +
+          "\nStart Time: " + (startTimeInput.value || "—") +
+          "\nEnd Time: " + (endTimeInput.value || "—") +
+          "\nDuration: " + durationText +
+          "\nTotal Minutes: " + totalMinutesText +
+          "\nHourly Rate: " + rateTextForCopy +
+          "\nTotal Charges: " + totalTextForCopy;
+      } else {
+        copyText =
+          "MUHAMMAD ALI CALCULATOR\n" +
+          "\nCalculation: Hours & Minutes Billing" +
+          "\nTime: " + durationText +
+          "\nTotal Minutes: " + totalMinutesText +
+          "\nHourly Rate: " + rateTextForCopy +
+          "\nTotal Charges: " + totalTextForCopy;
+      }
+
+    }
+
+
+
+    function calculateBilling() {
+
+      const currency = currencyInput.value || "$";
+
+      const rateText = rateInput.value.trim();
+
+      const rate = Number(rateText);
+
+      const durationMinutes = getDurationMinutes();
+
+
+
+      if (
+
+        durationMinutes === null ||
+
+        rateText === "" ||
+
+        !Number.isFinite(durationMinutes) ||
+
+        !Number.isFinite(rate) ||
+
+        durationMinutes < 0 ||
+
+        rate < 0
+
+      ) {
+
+        setBillingOutput(currency, 0, 0, 0);
+
+        insightBox.innerHTML = "<b>Status:</b> Fill the fields to generate the result.";
+
+        return;
+
+      }
+
+
+
+      const amount = (durationMinutes / 60) * rate;
+
+      setBillingOutput(currency, amount, durationMinutes, rate);
+
+    }
+
+
+
+    function calculatePercentage() {
+
+      const totalText = percentTotalInput.value.trim();
+
+      const percentText = percentValueInput.value.trim();
+
+
+
+      const total = Number(totalText);
+
+      const percent = Number(percentText);
+
+
+
+      summaryTitle.textContent = "Percentage Result";
+
+      modePill.textContent = "Percentage";
+
+      amountLabel.textContent = "Percentage Amount";
+
+      currencyOut.style.display = "none";
+
+
+
+      if (
+
+        totalText === "" ||
+
+        percentText === "" ||
+
+        !Number.isFinite(total) ||
+
+        !Number.isFinite(percent) ||
+
+        total < 0 ||
+
+        percent < 0
+
+      ) {
+
+        mainAmount.textContent = "0.00";
+
+
+
+        k1Label.textContent = "Total Amount";
+
+        k1Value.textContent = "0.00";
+
+
+
+        k2Label.textContent = "Percentage";
+
+        k2Value.textContent = "0%";
+
+
+
+        k3Label.textContent = "Remaining";
+
+        k3Value.textContent = "0.00";
+
+
+
+        k4Label.textContent = "Mode";
+
+        k4Value.textContent = "Percentage";
+
+
+
+        formulaText.textContent = "Percentage Amount = Total × Percentage ÷ 100";
+
+        insightBox.innerHTML = "<b>Status:</b> Add total amount and percentage to see the remaining value.";
+
+        receiptLines.classList.add("show");
+
+        receiptLine1Label.textContent = "Calculation";
+
+        receiptLine1Value.textContent = "Percentage";
+
+        receiptLine2Label.textContent = "Prepared For";
+
+        receiptLine2Value.textContent = "Muhammad Ali";
+
+        clearHighlights();
+
+        k3Value.parentElement.classList.add("highlight");
+
+        copyText =
+          "MUHAMMAD ALI CALCULATOR\n" +
+          "\nCalculation: Percentage" +
+          "\nTotal Amount: 0.00" +
+          "\nPercentage: 0.00%" +
+          "\nPercentage Amount: 0.00" +
+          "\nRemaining Amount: 0.00";
+
+        return;
+
+      }
+
+
+
+      const amount = (total * percent) / 100;
+
+      const remaining = total - amount;
+
+
+
+      mainAmount.textContent = amount.toFixed(2);
+
+
+
+      k1Label.textContent = "Total Amount";
+
+      k1Value.textContent = total.toFixed(2);
+
+
+
+      k2Label.textContent = "Percentage";
+
+      k2Value.textContent = percent.toFixed(2) + "%";
+
+
+
+      k3Label.textContent = "Remaining";
+
+      k3Value.textContent = remaining.toFixed(2);
+
+
+
+      k4Label.textContent = "Mode";
+
+      k4Value.textContent = "Percentage";
+
+
+
+      formulaText.textContent = "Percentage Amount = Total × Percentage ÷ 100";
+
+      insightBox.innerHTML = "<b>Status:</b> Percentage calculated successfully. Amount and remaining value are ready.";
+
+      receiptLines.classList.add("show");
+
+      receiptLine1Label.textContent = "Calculation";
+
+      receiptLine1Value.textContent = percent.toFixed(2) + "% of " + total.toFixed(2);
+
+      receiptLine2Label.textContent = "Remaining";
+
+      receiptLine2Value.textContent = remaining.toFixed(2);
+
+      clearHighlights();
+
+      k3Value.parentElement.classList.add("highlight");
+
+      copyText =
+        "MUHAMMAD ALI CALCULATOR\n" +
+        "\nCalculation: Percentage" +
+        "\nTotal Amount: " + total.toFixed(2) +
+        "\nPercentage: " + percent.toFixed(2) + "%" +
+        "\nPercentage Amount: " + amount.toFixed(2) +
+        "\nRemaining Amount: " + remaining.toFixed(2);
+
+    }
+
+
+    function formatReceiptDuration(totalMinutes) {
+      const rounded = Math.round(totalMinutes);
+      const hours = Math.floor(rounded / 60);
+      const minutes = rounded % 60;
+
+      if (hours && minutes) return hours + "h " + minutes + "m";
+      if (hours) return hours + "h";
+      return minutes + "m";
+    }
+
+    function formatReceiptDate(date) {
+      return date.toLocaleString([], {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    function makeReceiptNumber(date) {
+      const pad = (value) => String(value).padStart(2, "0");
+      return "MA-" +
+        date.getFullYear() +
+        pad(date.getMonth() + 1) +
+        pad(date.getDate()) + "-" +
+        pad(date.getHours()) +
+        pad(date.getMinutes());
+    }
+
+    function escapeReceiptHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function setReceiptRows(rows) {
+      receiptDetails.innerHTML = rows.map((row) => {
+        return '<div class="receipt-detail-row">' +
+          '<span>' + escapeReceiptHtml(row.label) + '</span>' +
+          '<strong>' + escapeReceiptHtml(row.value) + '</strong>' +
+        '</div>';
+      }).join("");
+    }
+
+    function buildReceipt() {
+      calculate();
+
+      const now = new Date();
+      const receiptId = makeReceiptNumber(now);
+      const dateText = formatReceiptDate(now);
+
+      let rows = [];
+      let title = "";
+      let totalLabel = "";
+      let totalText = "";
+
+      if (mode === "percentage") {
+        const totalTextInput = percentTotalInput.value.trim();
+        const percentTextInput = percentValueInput.value.trim();
+        const total = Number(totalTextInput);
+        const percent = Number(percentTextInput);
+
+        if (
+          totalTextInput === "" ||
+          percentTextInput === "" ||
+          !Number.isFinite(total) ||
+          !Number.isFinite(percent) ||
+          total < 0 ||
+          percent < 0
+        ) {
+          showToast("Enter a valid amount and percentage first.", "error");
+          return false;
+        }
+
+        const percentageAmount = (total * percent) / 100;
+        const remaining = total - percentageAmount;
+
+        title = "Percentage Calculation";
+        totalLabel = "Percentage Amount";
+        totalText = percentageAmount.toFixed(2);
+
+        rows = [
+          { label: "Original Amount", value: total.toFixed(2) },
+          { label: "Percentage", value: percent.toFixed(2) + "%" },
+          { label: "Percentage Amount", value: percentageAmount.toFixed(2) },
+          { label: "Remaining", value: remaining.toFixed(2) }
+        ];
+
+        receiptText =
+          "MUHAMMAD ALI\n" +
+          "PERCENTAGE RECEIPT\n" +
+          "------------------------------\n" +
+          "Receipt: " + receiptId + "\n" +
+          "Date: " + dateText + "\n" +
+          "Calculation: " + title + "\n" +
+          "------------------------------\n" +
+          "Original Amount: " + total.toFixed(2) + "\n" +
+          "Percentage: " + percent.toFixed(2) + "%\n" +
+          "Percentage Amount: " + percentageAmount.toFixed(2) + "\n" +
+          "Remaining: " + remaining.toFixed(2) + "\n" +
+          "------------------------------\n" +
+          "RESULT: " + totalText;
+      } else {
+        const rateText = rateInput.value.trim();
+        const rate = Number(rateText);
+        const durationMinutes = getDurationMinutes();
+        const currency = currencyInput.value || "$";
+
+        if (
+          durationMinutes === null ||
+          rateText === "" ||
+          !Number.isFinite(durationMinutes) ||
+          !Number.isFinite(rate) ||
+          durationMinutes < 0 ||
+          rate < 0
+        ) {
+          showToast("Enter a valid duration and hourly rate first.", "error");
+          return false;
+        }
+
+        const amount = (durationMinutes / 60) * rate;
+        const durationText = formatReceiptDuration(durationMinutes);
+        title = mode === "minutes" ? "Hours & Minutes Billing" : "Time Range Billing";
+        totalLabel = "Total Charges";
+        totalText = currency + " " + amount.toFixed(2);
+
+        rows = [
+          { label: "Duration", value: durationText },
+          { label: "Total Minutes", value: Math.round(durationMinutes) + " min" },
+          { label: "Hourly Rate", value: currency + " " + rate.toFixed(2) + " / hr" }
+        ];
+
+        if (mode === "time") {
+          const start = startTimeInput.value || "—";
+          const end = endTimeInput.value || "—";
+          const startMinutes = parseTimeToMinutes(startTimeInput.value);
+          const endMinutes = parseTimeToMinutes(endTimeInput.value);
+          const nextDay = startMinutes !== null && endMinutes !== null && endMinutes < startMinutes;
+
+          rows.unshift(
+            { label: "Start Time", value: start },
+            { label: "End Time", value: end + (nextDay ? " (next day)" : "") }
+          );
+        }
+
+        receiptText =
+          "MUHAMMAD ALI\n" +
+          "BILLING RECEIPT\n" +
+          "------------------------------\n" +
+          "Receipt: " + receiptId + "\n" +
+          "Date: " + dateText + "\n" +
+          "Calculation: " + title + "\n" +
+          "------------------------------\n" +
+          rows.map((row) => row.label + ": " + row.value).join("\n") + "\n" +
+          "------------------------------\n" +
+          "TOTAL: " + totalText;
+      }
+
+      receiptNumber.textContent = receiptId;
+      receiptDate.textContent = dateText;
+      receiptMode.textContent = title;
+      receiptTotalLabel.textContent = totalLabel;
+      receiptTotal.textContent = totalText;
+      setReceiptRows(rows);
+
+      return true;
+    }
+
+    function openReceipt() {
+      if (!buildReceipt()) return;
+      receiptModal.classList.add("show");
+      receiptModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeReceipt() {
+      receiptModal.classList.remove("show");
+      receiptModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    async function copyReceipt() {
+      if (!receiptText && !buildReceipt()) return;
+
+      const copied = await copyToClipboard(receiptText);
+
+      if (copied) {
+        showToast("Receipt copied successfully.");
+      } else {
+        closeReceipt();
+        showManualCopyBox(receiptText);
+        showToast("Browser blocked copy. Receipt text selected below.", "error");
+      }
+    }
+
+    function printReceipt() {
+      if (!buildReceipt()) return;
+
+      const printWindow = window.open("", "_blank", "width=760,height=900");
+
+      if (!printWindow) {
+        showToast("Allow pop-ups to print or save the receipt.", "error");
+        return;
+      }
+
+      const rowsHtml = receiptDetails.innerHTML;
+
+      printWindow.document.open();
+      printWindow.document.write(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${escapeReceiptHtml(receiptNumber.textContent)} - Receipt</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px;
+      background: #f2f2f2;
+      color: #24190b;
+      font-family: Arial, "Segoe UI", sans-serif;
+    }
+    .print-receipt {
+      width: 100%;
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 34px;
+      background: #fffaf0;
+      border: 1px solid #e9d7aa;
+      border-radius: 22px;
+    }
+    .head {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px dashed #bca77b;
+    }
+    h1 { margin: 0; font-size: 25px; }
+    .sub { margin-top: 5px; color: #806b49; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+    .number { color: #806b49; font-size: 12px; font-weight: 700; text-align: right; }
+    .meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px dashed #d5c39a;
+    }
+    .label, .receipt-detail-row span {
+      color: #806b49;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .value { margin-top: 5px; font-weight: 700; }
+    .receipt-details { padding: 18px 0; }
+    .receipt-detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 8px 0;
+    }
+    .receipt-detail-row strong { text-align: right; }
+    .total {
+      margin-top: 4px;
+      padding: 18px;
+      border-radius: 16px;
+      background: #251b0e;
+      color: #fff2c9;
+    }
+    .total span { display: block; font-size: 11px; text-transform: uppercase; margin-bottom: 7px; }
+    .total strong { font-size: 32px; }
+    .foot { margin-top: 18px; color: #806b49; font-size: 11px; text-align: center; }
+    @media print {
+      body { padding: 0; background: #fff; }
+      .print-receipt { max-width: none; border: 0; border-radius: 0; }
     }
   </style>
 </head>
 <body>
-  <div class="glow-a"></div>
-  <div class="glow-b"></div>
-
-  <main class="app">
-    <header class="hero">
-      <div class="brand">
-        <div class="brand-badge"><span class="sig-main">MA</span></div>
-        <div>
-          <h1>Muhammad Ali Calculator</h1>
-          <p>Premium calculator interface with clean styling, separate tools, and a polished client-facing presentation.</p>
-        </div>
+  <main class="print-receipt">
+    <div class="head">
+      <div>
+        <h1>Muhammad Ali</h1>
+        <div class="sub">Billing Receipt</div>
       </div>
-    </header>
-
-    <section class="workspace">
-      <aside class="glass side-rail">
-
-        <button class="nav-btn active" data-mode="minutes" type="button">
-          <span class="icon">⏱</span>
-          <small>Minutes</small>
-        </button>
-
-        <button class="nav-btn" data-mode="time" type="button">
-          <span class="icon">⌚</span>
-          <small>Time Range</small>
-        </button>
-
-        <button class="nav-btn" data-mode="percentage" type="button">
-          <span class="icon">%</span>
-          <small>Percentage</small>
-        </button>
-      </aside>
-
-      <section class="glass editor">
-        <div class="panel-header">
-          <div>
-            <strong id="panelTitle">Minutes Calculator</strong>
-            <span id="panelDesc">Enter total minutes, then add hourly rate and currency. The result updates live.</span>
-          </div>
-          <div class="mode-chip" id="panelChip">Charges</div>
-        </div>
-
-        <div class="tool active" id="minutesTool">
-          <div class="field full">
-            <label for="minutes">
-              <span>Total Minutes</span>
-              <small>Minutes</small>
-            </label>
-            <div class="input-wrap">
-              <input id="minutes" type="number" min="0" step="1" placeholder="Example: 15" inputmode="decimal" />
-            </div>
-          </div>
-
-          <div class="chips">
-            <button class="chip-btn" type="button" data-minutes="15">15 min</button>
-            <button class="chip-btn" type="button" data-minutes="30">30 min</button>
-            <button class="chip-btn" type="button" data-minutes="45">45 min</button>
-            <button class="chip-btn" type="button" data-minutes="60">1 hour</button>
-            <button class="chip-btn" type="button" data-minutes="120">2 hours</button>
-            <button class="chip-btn" type="button" data-minutes="180">3 hours</button>
-          </div>
-        </div>
-
-        <div class="tool" id="timeTool">
-          <div class="tool-grid">
-            <div class="field">
-              <label for="startTime">
-                <span>Start Time</span>
-                <small>From</small>
-              </label>
-              <div class="input-wrap">
-                <input id="startTime" type="time" />
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="endTime">
-                <span>End Time</span>
-                <small>To</small>
-              </label>
-              <div class="input-wrap">
-                <input id="endTime" type="time" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="tool" id="percentageTool">
-          <div class="tool-grid">
-            <div class="field">
-              <label for="percentTotal">
-                <span>Total Amount</span>
-                <small>Total</small>
-              </label>
-              <div class="input-wrap">
-                <input id="percentTotal" type="number" min="0" step="0.01" placeholder="Example: 12000" inputmode="decimal" />
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="percentValue">
-                <span>Percentage</span>
-                <small>%</small>
-              </label>
-              <div class="input-wrap">
-                <input id="percentValue" type="number" min="0" step="0.01" placeholder="Example: 2 or 3" inputmode="decimal" />
-              </div>
-            </div>
-          </div>
-
-          <div class="chips">
-            <button class="chip-btn" type="button" data-percent="1">1%</button>
-            <button class="chip-btn" type="button" data-percent="2">2%</button>
-            <button class="chip-btn" type="button" data-percent="3">3%</button>
-            <button class="chip-btn" type="button" data-percent="5">5%</button>
-            <button class="chip-btn" type="button" data-percent="10">10%</button>
-          </div>
-        </div>
-
-        <div class="subsection" id="billingSection">
-          <div class="subsection-head">
-            <strong>Billing Configuration</strong>
-            <small>Used for Minutes and Time Range</small>
-          </div>
-
-          <div class="tool-grid">
-            <div class="field">
-              <label for="rate">
-                <span>Hourly Rate</span>
-                <small>Rate / Hour</small>
-              </label>
-              <div class="input-wrap">
-                <input id="rate" type="number" min="0" step="0.01" value="50" placeholder="Example: 50" inputmode="decimal" />
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="currency">
-                <span>Currency</span>
-                <small>Currency</small>
-              </label>
-              <div class="input-wrap">
-                <select id="currency">
-                  <option value="$" selected>$ (USD)</option>
-                  <option value="Rs">Rs (PKR)</option>
-                  <option value="€">€ (EUR)</option>
-                  <option value="£">£ (GBP)</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="glass result-column">
-        <div class="result-card" id="resultCard">
-          <div class="result-top">
-            <div>
-              <span>Live Preview</span>
-              <h2 id="summaryTitle">Charges Result</h2>
-            </div>
-            <div class="result-pill" id="modePill">Minutes</div>
-          </div>
-
-          <div class="hero-amount shine">
-            <div class="amount-label" id="amountLabel">Total Charges</div>
-            <div class="amount">
-              <span class="currency" id="currencyOut">$</span>
-              <span id="mainAmount">0.00</span>
-            </div>
-          </div>
-
-          <div class="kpi-grid">
-            <div class="kpi">
-              <span id="k1Label">Duration</span>
-              <strong id="k1Value">0.00 h</strong>
-            </div>
-
-            <div class="kpi">
-              <span id="k2Label">Total Minutes</span>
-              <strong id="k2Value">0 min</strong>
-            </div>
-
-            <div class="kpi">
-              <span id="k3Label">Hourly Rate</span>
-              <strong id="k3Value">$ 0.00</strong>
-            </div>
-
-            <div class="kpi">
-              <span id="k4Label">Mode</span>
-              <strong id="k4Value">Minutes</strong>
-            </div>
-          </div>
-
-
-          <div class="receipt-lines show" id="receiptLines">
-            <div class="receipt-line">
-              <span id="receiptLine1Label">Calculation</span>
-              <strong id="receiptLine1Value">Minutes Billing</strong>
-            </div>
-            <div class="receipt-line">
-              <span id="receiptLine2Label">Prepared For</span>
-              <strong id="receiptLine2Value">Muhammad Ali</strong>
-            </div>
-          </div>
-
-          <div class="insight-box" id="insightBox">
-            <b>Status:</b> Ready for billing calculation. Fill in the fields to see the live result.
-          </div>
-
-          <button id="copyBtn" class="copy-btn" type="button">Copy Charges</button>
-          <div class="formula" id="formulaText">Charges = Duration Hours × Hourly Rate</div>
-        </div>
-      </section>
-    </section>
+      <div class="number">${escapeReceiptHtml(receiptNumber.textContent)}</div>
+    </div>
+    <div class="meta">
+      <div>
+        <div class="label">Date</div>
+        <div class="value">${escapeReceiptHtml(receiptDate.textContent)}</div>
+      </div>
+      <div>
+        <div class="label">Calculation</div>
+        <div class="value">${escapeReceiptHtml(receiptMode.textContent)}</div>
+      </div>
+    </div>
+    <div class="receipt-details">${rowsHtml}</div>
+    <div class="total">
+      <span>${escapeReceiptHtml(receiptTotalLabel.textContent)}</span>
+      <strong>${escapeReceiptHtml(receiptTotal.textContent)}</strong>
+    </div>
+    <div class="foot">Generated with Muhammad Ali Calculator</div>
   </main>
-
-  <div class="manual-copy-box" id="manualCopyBox">
-    <label for="manualCopyText">Copy manually if browser blocks clipboard:</label>
-    <textarea id="manualCopyText" readonly></textarea>
-  </div>
-
-  <div class="toast" id="toast"></div>
-
   <script>
-    const navButtons = document.querySelectorAll(".nav-btn");
-
-    const minutesTool = document.getElementById("minutesTool");
-    const timeTool = document.getElementById("timeTool");
-    const percentageTool = document.getElementById("percentageTool");
-    const billingSection = document.getElementById("billingSection");
-
-    const panelTitle = document.getElementById("panelTitle");
-    const panelDesc = document.getElementById("panelDesc");
-    const panelChip = document.getElementById("panelChip");
-
-    const minutesInput = document.getElementById("minutes");
-    const startTimeInput = document.getElementById("startTime");
-    const endTimeInput = document.getElementById("endTime");
-    const rateInput = document.getElementById("rate");
-    const currencyInput = document.getElementById("currency");
-    const percentTotalInput = document.getElementById("percentTotal");
-    const percentValueInput = document.getElementById("percentValue");
-
-    const summaryTitle = document.getElementById("summaryTitle");
-    const modePill = document.getElementById("modePill");
-    const amountLabel = document.getElementById("amountLabel");
-    const currencyOut = document.getElementById("currencyOut");
-    const mainAmount = document.getElementById("mainAmount");
-
-    const k1Label = document.getElementById("k1Label");
-    const k1Value = document.getElementById("k1Value");
-    const k2Label = document.getElementById("k2Label");
-    const k2Value = document.getElementById("k2Value");
-    const k3Label = document.getElementById("k3Label");
-    const k3Value = document.getElementById("k3Value");
-    const k4Label = document.getElementById("k4Label");
-    const k4Value = document.getElementById("k4Value");
-
-    const formulaText = document.getElementById("formulaText");
-    const insightBox = document.getElementById("insightBox");
-    const receiptLines = document.getElementById("receiptLines");
-    const receiptLine1Label = document.getElementById("receiptLine1Label");
-    const receiptLine1Value = document.getElementById("receiptLine1Value");
-    const receiptLine2Label = document.getElementById("receiptLine2Label");
-    const receiptLine2Value = document.getElementById("receiptLine2Value");
-    const copyBtn = document.getElementById("copyBtn");
-    const toast = document.getElementById("toast");
-    const manualCopyBox = document.getElementById("manualCopyBox");
-    const manualCopyText = document.getElementById("manualCopyText");
-    const resultCard = document.getElementById("resultCard");
-
-    let mode = "minutes";
-    let copyText = "$ 0.00";
-    let toastTimer = null;
-
-
-    function updateCopyButtonText() {
-      if (mode === "percentage") {
-        copyBtn.textContent = "Copy Percentage Result";
-      } else {
-        copyBtn.textContent = "Copy Charges";
-      }
+    window.addEventListener("load", function () {
+      setTimeout(function () { window.print(); }, 150);
+    });
+  <\/script>
+</body>
+</html>`);
+      printWindow.document.close();
     }
 
-    function clearHighlights() {
-      [k1Value.parentElement, k2Value.parentElement, k3Value.parentElement, k4Value.parentElement].forEach((el) => {
-        el.classList.remove("highlight");
-      });
-    }
+function resetCalculator() {
 
+  hoursInput.value = "";
+  minutesInput.value = "";
+  startTimeInput.value = "";
+  endTimeInput.value = "";
+  percentTotalInput.value = "";
+  percentValueInput.value = "";
+  receiptText = "";
 
-    function showToast(message, type = "success") {
-      clearTimeout(toastTimer);
-      toast.textContent = message;
-      toast.classList.toggle("error", type === "error");
-      toast.classList.add("show");
-      toastTimer = setTimeout(() => toast.classList.remove("show"), 1500);
-    }
+  hideManualCopyBox();
+  closeReceipt();
+  calculate();
+  showToast("Calculator reset successfully.");
 
-    function setMode(nextMode) {
-      mode = nextMode;
-
-      navButtons.forEach((btn) => {
-        btn.classList.toggle("active", btn.dataset.mode === mode);
-      });
-
-      minutesTool.classList.toggle("active", mode === "minutes");
-      timeTool.classList.toggle("active", mode === "time");
-      percentageTool.classList.toggle("active", mode === "percentage");
-      billingSection.classList.toggle("hidden", mode === "percentage");
-
-      if (mode === "minutes") {
-        panelTitle.textContent = "Minutes Calculator";
-        panelDesc.textContent = "Enter total minutes, then add hourly rate and currency. The result updates live.";
-        panelChip.textContent = "Charges";
-      }
-
-      if (mode === "time") {
-        panelTitle.textContent = "Time Range Calculator";
-        panelDesc.textContent = "Select start and end time. Overnight time ranges are supported automatically.";
-        panelChip.textContent = "Time Range";
-      }
-
-      if (mode === "percentage") {
-        panelTitle.textContent = "Percentage Calculator";
-        panelDesc.textContent = "Enter total amount and percentage. Rate and currency are not used in this mode.";
-        panelChip.textContent = "Percentage";
-      }
-
-      updateCopyButtonText();
-      calculate();
-    }
-
-    function parseTimeToMinutes(value) {
-      if (!value) return null;
-      const parts = value.split(":");
-      if (parts.length < 2) return null;
-
-      const hours = Number(parts[0]);
-      const minutes = Number(parts[1]);
-
-      if (!Number.isFinite(hours) || !Number.isFinite(minutes)) return null;
-      return hours * 60 + minutes;
-    }
-
-    function getDurationMinutes() {
-      if (mode === "minutes") {
-        const text = minutesInput.value.trim();
-        if (text === "") return null;
-
-        const minutes = Number(text);
-        if (!Number.isFinite(minutes) || minutes < 0) return NaN;
-        return minutes;
-      }
-
-      const start = parseTimeToMinutes(startTimeInput.value);
-      const end = parseTimeToMinutes(endTimeInput.value);
-
-      if (start === null || end === null) return null;
-
-      let duration = end - start;
-      if (duration < 0) duration += 1440;
-      return duration;
-    }
-
-    function setBillingOutput(currency, amount, durationMinutes, rate) {
-      const hours = durationMinutes / 60;
-
-      summaryTitle.textContent = "Charges Result";
-      modePill.textContent = mode === "minutes" ? "Minutes" : "Time Range";
-      amountLabel.textContent = "Total Charges";
-      currencyOut.style.display = "inline";
-      currencyOut.textContent = currency;
-      mainAmount.textContent = amount.toFixed(2);
-
-      k1Label.textContent = "Duration";
-      k1Value.textContent = hours.toFixed(2) + " h";
-
-      k2Label.textContent = "Total Minutes";
-      k2Value.textContent = Math.round(durationMinutes) + " min";
-
-      k3Label.textContent = "Hourly Rate";
-      k3Value.textContent = currency + " " + rate.toFixed(2);
-
-      k4Label.textContent = "Mode";
-      k4Value.textContent = mode === "minutes" ? "Minutes" : "Time Range";
-
-      formulaText.textContent = "Charges = Duration Hours × Hourly Rate";
-      insightBox.innerHTML = "<b>Status:</b> Result is ready. You can copy the final amount instantly.";
-      receiptLines.classList.add("show");
-      receiptLine1Label.textContent = "Calculation";
-      receiptLine1Value.textContent = mode === "minutes" ? "Minutes Billing" : "Time Range Billing";
-      receiptLine2Label.textContent = "Prepared For";
-      receiptLine2Value.textContent = "Muhammad Ali";
-      clearHighlights();
-      copyText = currency + " " + amount.toFixed(2);
-    }
-
-    function calculateBilling() {
-      const currency = currencyInput.value || "$";
-      const rateText = rateInput.value.trim();
-      const rate = Number(rateText);
-      const durationMinutes = getDurationMinutes();
-
-      if (
-        durationMinutes === null ||
-        rateText === "" ||
-        !Number.isFinite(durationMinutes) ||
-        !Number.isFinite(rate) ||
-        durationMinutes < 0 ||
-        rate < 0
-      ) {
-        setBillingOutput(currency, 0, 0, 0);
-        insightBox.innerHTML = "<b>Status:</b> Fill the fields to generate the result.";
-        return;
-      }
-
-      const amount = (durationMinutes / 60) * rate;
-      setBillingOutput(currency, amount, durationMinutes, rate);
-    }
-
-    function calculatePercentage() {
-      const totalText = percentTotalInput.value.trim();
-      const percentText = percentValueInput.value.trim();
-
-      const total = Number(totalText);
-      const percent = Number(percentText);
-
-      summaryTitle.textContent = "Percentage Result";
-      modePill.textContent = "Percentage";
-      amountLabel.textContent = "Percentage Amount";
-      currencyOut.style.display = "none";
-
-      if (
-        totalText === "" ||
-        percentText === "" ||
-        !Number.isFinite(total) ||
-        !Number.isFinite(percent) ||
-        total < 0 ||
-        percent < 0
-      ) {
-        mainAmount.textContent = "0.00";
-
-        k1Label.textContent = "Total Amount";
-        k1Value.textContent = "0.00";
-
-        k2Label.textContent = "Percentage";
-        k2Value.textContent = "0%";
-
-        k3Label.textContent = "Remaining";
-        k3Value.textContent = "0.00";
-
-        k4Label.textContent = "Mode";
-        k4Value.textContent = "Percentage";
-
-        formulaText.textContent = "Percentage Amount = Total × Percentage ÷ 100";
-        insightBox.innerHTML = "<b>Status:</b> Add total amount and percentage to see the remaining value.";
-        receiptLines.classList.add("show");
-        receiptLine1Label.textContent = "Calculation";
-        receiptLine1Value.textContent = "Percentage";
-        receiptLine2Label.textContent = "Prepared For";
-        receiptLine2Value.textContent = "Muhammad Ali";
-        clearHighlights();
-        k3Value.parentElement.classList.add("highlight");
-        copyText = "Amount: 0.00 | Remaining: 0.00";
-        return;
-      }
-
-      const amount = (total * percent) / 100;
-      const remaining = total - amount;
-
-      mainAmount.textContent = amount.toFixed(2);
-
-      k1Label.textContent = "Total Amount";
-      k1Value.textContent = total.toFixed(2);
-
-      k2Label.textContent = "Percentage";
-      k2Value.textContent = percent.toFixed(2) + "%";
-
-      k3Label.textContent = "Remaining";
-      k3Value.textContent = remaining.toFixed(2);
-
-      k4Label.textContent = "Mode";
-      k4Value.textContent = "Percentage";
-
-      formulaText.textContent = "Percentage Amount = Total × Percentage ÷ 100";
-      insightBox.innerHTML = "<b>Status:</b> Percentage calculated successfully. Amount and remaining value are ready.";
-      receiptLines.classList.add("show");
-      receiptLine1Label.textContent = "Calculation";
-      receiptLine1Value.textContent = percent.toFixed(2) + "% of " + total.toFixed(2);
-      receiptLine2Label.textContent = "Remaining";
-      receiptLine2Value.textContent = remaining.toFixed(2);
-      clearHighlights();
-      k3Value.parentElement.classList.add("highlight");
-      copyText = "Amount: " + amount.toFixed(2) + " | Remaining: " + remaining.toFixed(2);
-    }
+}
 
     function calculate() {
+
       if (mode === "percentage") {
+
         calculatePercentage();
+
       } else {
+
         calculateBilling();
+
       }
+
     }
+
+
 
     function hideManualCopyBox() {
+
       manualCopyBox.classList.remove("show");
+
     }
+
+
 
     function showManualCopyBox(text) {
+
       manualCopyText.value = text;
+
       manualCopyBox.classList.add("show");
+
       manualCopyText.focus();
+
       manualCopyText.select();
+
       manualCopyText.setSelectionRange(0, manualCopyText.value.length);
+
     }
 
+
+
     function fallbackCopy(text) {
+
       const textarea = document.createElement("textarea");
+
       textarea.value = text;
+
       textarea.setAttribute("readonly", "readonly");
+
       textarea.style.position = "fixed";
+
       textarea.style.top = "0";
+
       textarea.style.left = "0";
+
       textarea.style.width = "1px";
+
       textarea.style.height = "1px";
+
       textarea.style.opacity = "0";
+
       textarea.style.zIndex = "-1";
+
+
 
       document.body.appendChild(textarea);
 
+
+
       textarea.focus();
+
       textarea.select();
+
       textarea.setSelectionRange(0, textarea.value.length);
+
+
 
       let copied = false;
 
+
+
       try {
+
         copied = document.execCommand("copy");
+
       } catch (error) {
+
         copied = false;
+
       }
+
+
 
       document.body.removeChild(textarea);
 
+
+
       if (!copied) {
+
         throw new Error("Fallback copy failed");
+
       }
+
     }
+
+
 
     async function copyToClipboard(text) {
+
       if (navigator.clipboard && window.isSecureContext) {
+
         try {
+
           await navigator.clipboard.writeText(text);
+
           return true;
+
         } catch (error) {
+
         }
+
       }
+
+
 
       try {
+
         fallbackCopy(text);
+
         return true;
+
       } catch (error) {
+
         return false;
+
       }
+
     }
+
+
 
     async function copyResult() {
+
       calculate();
+
       hideManualCopyBox();
 
+
+
       const latestText = copyText;
+
       const copied = await copyToClipboard(latestText);
 
+
+
       if (copied) {
+
         copyBtn.textContent = "Copied Successfully";
+
         copyBtn.classList.add("copied");
-        showToast("Result copied: " + latestText);
+
+        showToast(mode === "percentage" ? "Percentage details copied successfully." : "Charge details copied successfully.");
+
+
 
         setTimeout(() => {
+
           updateCopyButtonText();
+
           copyBtn.classList.remove("copied");
+
         }, 1200);
+
       } else {
+
         showManualCopyBox(latestText);
+
         showToast("Browser blocked copy. Text selected below.", "error");
+
       }
+
     }
 
+
+
     navButtons.forEach((btn) => {
+
       btn.addEventListener("click", () => setMode(btn.dataset.mode));
+
     });
 
-    document.querySelectorAll("[data-minutes]").forEach((chip) => {
+
+
+    document.querySelectorAll("[data-add-minutes]").forEach((chip) => {
+
       chip.addEventListener("click", () => {
-        minutesInput.value = chip.dataset.minutes;
-        setMode("minutes");
+
+        addMinutesToDuration(Number(chip.dataset.addMinutes) || 0);
+
       });
+
     });
+
+
 
     document.querySelectorAll("[data-percent]").forEach((chip) => {
+
       chip.addEventListener("click", () => {
+
         percentValueInput.value = chip.dataset.percent;
+
         setMode("percentage");
+
       });
+
     });
+
+
+
+    hoursInput.addEventListener("input", () => {
+      if (hoursInput.value !== "" && Number(hoursInput.value) < 0) hoursInput.value = 0;
+    });
+
+    minutesInput.addEventListener("input", () => {
+      if (minutesInput.value === "") return;
+      const value = Number(minutesInput.value);
+      if (value < 0) minutesInput.value = 0;
+      if (value > 59) minutesInput.value = 59;
+    });
+
+
 
     [
+
+      hoursInput,
+
       minutesInput,
+
       startTimeInput,
+
       endTimeInput,
+
       rateInput,
+
       currencyInput,
+
       percentTotalInput,
+
       percentValueInput
+
     ].forEach((el) => {
+
       el.addEventListener("input", calculate);
+
       el.addEventListener("change", calculate);
+
     });
+
+
 
     resultCard.addEventListener("mousemove", (event) => {
+
       const rect = resultCard.getBoundingClientRect();
+
       const x = event.clientX - rect.left;
+
       const y = event.clientY - rect.top;
+
       const rotateY = ((x / rect.width) - 0.5) * 6.5;
+
       const rotateX = ((0.5 - (y / rect.height)) * 6.5);
+
       resultCard.style.transform = "perspective(900px) rotateX(" + rotateX + "deg) rotateY(" + rotateY + "deg)";
+
     });
+
+
 
     resultCard.addEventListener("mouseleave", () => {
+
       resultCard.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
+
     });
 
-    copyBtn.addEventListener("click", copyResult);
 
-    document.addEventListener("click", (event) => {
-      if (!manualCopyBox.contains(event.target) && event.target !== copyBtn) {
-        hideManualCopyBox();
+
+    copyBtn.addEventListener("click", copyResult);
+    resetBtn.addEventListener("click", resetCalculator);
+    receiptBtn.addEventListener("click", openReceipt);
+    receiptCopyBtn.addEventListener("click", copyReceipt);
+    receiptPrintBtn.addEventListener("click", printReceipt);
+    receiptCloseBtn.addEventListener("click", closeReceipt);
+
+    receiptModal.addEventListener("click", (event) => {
+      if (event.target === receiptModal) {
+        closeReceipt();
       }
     });
 
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && receiptModal.classList.contains("show")) {
+        closeReceipt();
+      }
+    });
+
+
+
+    document.addEventListener("click", (event) => {
+
+      if (!manualCopyBox.contains(event.target) && event.target !== copyBtn) {
+
+        hideManualCopyBox();
+
+      }
+
+    });
+
+
+
     updateCopyButtonText();
+
     calculate();
+
   </script>
+
 </body>
+
 </html>
