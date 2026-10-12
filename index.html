@@ -1678,6 +1678,212 @@
       }
     }
 
+    .timer-panel,
+    .ledger-client-box,
+    .ledger-entry-card {
+      position: relative;
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,214,122,0.11);
+    }
+
+    .timer-status-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      flex-wrap: wrap;
+    }
+
+    .timer-status-row strong { color: var(--gold3); }
+    .timer-status-row > span:last-child { margin-left: auto; }
+
+    .timer-status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #8b806d;
+      box-shadow: 0 0 0 5px rgba(255,255,255,0.04);
+    }
+
+    .timer-status-dot.running {
+      background: var(--green);
+      box-shadow: 0 0 0 6px rgba(116,220,162,0.10), 0 0 18px rgba(116,220,162,0.45);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .timer-display {
+      margin: 20px 0 10px;
+      font-size: clamp(42px, 6vw, 68px);
+      line-height: 1;
+      font-weight: 950;
+      letter-spacing: -2px;
+      color: #fff8e9;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .timer-earnings {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 15px;
+      border-radius: 18px;
+      background: rgba(255,214,122,0.06);
+      border: 1px solid rgba(255,214,122,0.10);
+      margin-bottom: 16px;
+    }
+
+    .timer-earnings span { color: var(--muted); font-size: 12px; font-weight: 900; }
+    .timer-earnings strong { color: var(--gold3); font-size: 19px; }
+
+    .timer-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+    }
+
+    .timer-actions button,
+    .ledger-open-btn,
+    .ledger-action-btn {
+      min-height: 48px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 950;
+      transition: .18s ease;
+    }
+
+    .timer-actions button:hover,
+    .ledger-open-btn:hover,
+    .ledger-action-btn:hover { transform: translateY(-1px); }
+
+    .timer-primary-btn,
+    .ledger-action-btn,
+    .ledger-open-btn {
+      color: #17110a;
+      border: 0;
+      background: linear-gradient(135deg, var(--gold3), var(--gold), var(--gold2));
+    }
+
+    .timer-secondary-btn {
+      color: #fff4da;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,214,122,0.14);
+    }
+
+    .timer-danger-btn {
+      color: #ffdce2;
+      background: rgba(255,111,134,0.08);
+      border: 1px solid rgba(255,111,134,0.18);
+    }
+
+    .timer-actions button:disabled,
+    .ledger-action-btn:disabled {
+      opacity: .42;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .session-section { margin-top: 22px; }
+    .session-list,
+    .ledger-history { display: grid; gap: 9px; }
+
+    .empty-state {
+      padding: 16px;
+      border-radius: 18px;
+      color: #968970;
+      background: rgba(255,255,255,0.03);
+      border: 1px dashed rgba(255,214,122,0.12);
+      font-size: 12px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .session-item,
+    .ledger-history-item {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 13px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,214,122,0.09);
+    }
+
+    .session-item strong,
+    .ledger-history-item strong { color: #fff8e9; font-size: 13px; }
+    .session-item span,
+    .ledger-history-item span { display: block; color: var(--muted); font-size: 11px; margin-top: 5px; line-height: 1.45; }
+
+    .mini-action-row { display: flex; gap: 7px; }
+    .mini-action-btn {
+      min-height: 34px;
+      padding: 0 10px;
+      border-radius: 11px;
+      cursor: pointer;
+      color: #fff1d0;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,214,122,0.12);
+      font-size: 10px;
+      font-weight: 900;
+    }
+    .mini-action-btn.danger { color: #ffdce2; border-color: rgba(255,111,134,0.18); }
+
+    .ledger-open-btn { width: 100%; }
+
+    .ledger-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .ledger-summary-card {
+      min-height: 92px;
+      padding: 14px;
+      border-radius: 19px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,214,122,0.10);
+    }
+
+    .ledger-summary-card span { display: block; color: var(--muted); font-size: 11px; font-weight: 900; margin-bottom: 8px; }
+    .ledger-summary-card strong { display: block; color: #fff8ea; font-size: 18px; word-break: break-word; }
+    .ledger-summary-card small { display: block; color: #9e9179; margin-top: 7px; font-size: 10px; font-weight: 850; }
+    .ledger-balance-card.credit { border-color: rgba(116,220,162,0.26); background: rgba(116,220,162,0.06); }
+    .ledger-balance-card.due { border-color: rgba(255,111,134,0.24); background: rgba(255,111,134,0.06); }
+
+    .ledger-entry-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .ledger-entry-card > strong { display: block; color: var(--gold3); margin-bottom: 11px; }
+    .compact-input { height: 52px; margin-bottom: 10px; }
+    .ledger-action-btn { width: 100%; min-height: 44px; }
+    .ledger-note-field { margin-top: 14px; }
+    .ledger-helper-actions { margin: -2px 0 4px; }
+
+    .ledger-history-amount { text-align: right; }
+    .ledger-history-amount.bill { color: #ffd98b; }
+    .ledger-history-amount.payment { color: #91e7b3; }
+
+    @media (max-width: 760px) {
+      .side-rail { grid-template-columns: repeat(5, minmax(64px, 1fr)) !important; overflow-x: auto; }
+      .side-rail .nav-btn small { font-size: 9px; }
+      .ledger-summary { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 520px) {
+      .timer-actions,
+      .ledger-entry-grid { grid-template-columns: 1fr; }
+      .timer-status-row > span:last-child { width: 100%; margin-left: 18px; }
+    }
+
     .copy-btn {
 
       width: 100%;
@@ -2258,6 +2464,16 @@
 
         </button>
 
+        <button class="nav-btn" data-mode="timer" type="button">
+          <span class="icon">▶</span>
+          <small>Project Timer</small>
+        </button>
+
+        <button class="nav-btn" data-mode="ledger" type="button">
+          <span class="icon">$</span>
+          <small>Client Ledger</small>
+        </button>
+
       </aside>
 
 
@@ -2290,7 +2506,7 @@
 
                 <span>Hours</span>
 
-                <small>0 or more</small>
+                <small>Optional</small>
 
               </label>
 
@@ -2310,13 +2526,13 @@
 
                 <span>Minutes</span>
 
-                <small>0–59</small>
+                <small>Any minutes</small>
 
               </label>
 
               <div class="input-wrap">
 
-                <input id="minutes" type="number" min="0" max="59" step="1" placeholder="Example: 30" inputmode="numeric" />
+                <input id="minutes" type="number" min="0" step="1" placeholder="Example: 30" inputmode="numeric" />
 
               </div>
 
@@ -2454,13 +2670,159 @@
 
 
 
+        <div class="tool" id="timerTool">
+          <div class="tool-grid">
+            <div class="field">
+              <label for="timerClient">
+                <span>Client Name</span>
+                <small>Optional</small>
+              </label>
+              <div class="input-wrap">
+                <input id="timerClient" type="text" placeholder="Example: Magnus" autocomplete="off" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="timerProject">
+                <span>Project Name</span>
+                <small>Saved automatically</small>
+              </label>
+              <div class="input-wrap">
+                <input id="timerProject" type="text" placeholder="Example: Power Apps Changes" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+
+          <div class="timer-panel">
+            <div class="timer-status-row">
+              <span class="timer-status-dot" id="timerStatusDot"></span>
+              <strong id="timerStatusText">Ready</strong>
+              <span id="timerSavedText">Saved in this browser</span>
+            </div>
+
+            <div class="timer-display" id="timerDisplay">00:00:00</div>
+            <div class="timer-earnings">
+              <span>Live Charges</span>
+              <strong id="timerEarnings">$ 0.00</strong>
+            </div>
+
+            <div class="timer-actions">
+              <button id="timerStartBtn" class="timer-primary-btn" type="button">Start Work</button>
+              <button id="timerPauseBtn" class="timer-secondary-btn" type="button">Pause</button>
+              <button id="timerUseBtn" class="timer-secondary-btn" type="button">Use in Calculator</button>
+              <button id="timerClearBtn" class="timer-danger-btn" type="button">Clear Project</button>
+            </div>
+          </div>
+
+          <div class="session-section">
+            <div class="subsection-head">
+              <strong>Work Sessions</strong>
+              <small id="timerSessionCount">0 sessions</small>
+            </div>
+            <div class="session-list" id="timerSessionList">
+              <div class="empty-state">Start the timer to create your first work session.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool" id="ledgerTool">
+          <div class="ledger-client-box">
+            <div class="tool-grid">
+              <div class="field">
+                <label for="ledgerClientName">
+                  <span>Client</span>
+                  <small>Type or select saved client</small>
+                </label>
+                <div class="input-wrap">
+                  <input id="ledgerClientName" type="text" list="ledgerClientOptions" placeholder="Example: Magnus" autocomplete="off" />
+                  <datalist id="ledgerClientOptions"></datalist>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="ledgerCurrency">
+                  <span>Currency</span>
+                  <small>Saved per client</small>
+                </label>
+                <div class="input-wrap">
+                  <select id="ledgerCurrency">
+                    <option value="$">$ (USD)</option>
+                    <option value="Rs">Rs (PKR)</option>
+                    <option value="€">€ (EUR)</option>
+                    <option value="£">£ (GBP)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <button id="ledgerOpenBtn" class="ledger-open-btn" type="button">Open / Create Client</button>
+          </div>
+
+          <div class="ledger-summary" id="ledgerSummary">
+            <div class="ledger-summary-card">
+              <span>Total Billed</span>
+              <strong id="ledgerBilled">$ 0.00</strong>
+            </div>
+            <div class="ledger-summary-card">
+              <span>Total Received</span>
+              <strong id="ledgerReceived">$ 0.00</strong>
+            </div>
+            <div class="ledger-summary-card ledger-balance-card">
+              <span id="ledgerBalanceLabel">Balance</span>
+              <strong id="ledgerBalance">$ 0.00</strong>
+              <small id="ledgerBalanceStatus">Select a client</small>
+            </div>
+          </div>
+
+          <div class="ledger-entry-grid">
+            <div class="ledger-entry-card">
+              <strong>Add Bill</strong>
+              <div class="input-wrap compact-input">
+                <input id="ledgerBillAmount" type="number" min="0" step="0.01" placeholder="Bill amount" inputmode="decimal" />
+              </div>
+              <button id="ledgerAddBillBtn" class="ledger-action-btn" type="button">+ Add Bill</button>
+            </div>
+
+            <div class="ledger-entry-card">
+              <strong>Add Payment</strong>
+              <div class="input-wrap compact-input">
+                <input id="ledgerPaymentAmount" type="number" min="0" step="0.01" placeholder="Payment received" inputmode="decimal" />
+              </div>
+              <button id="ledgerAddPaymentBtn" class="ledger-action-btn" type="button">+ Add Payment</button>
+            </div>
+          </div>
+
+          <div class="field full ledger-note-field">
+            <label for="ledgerNote">
+              <span>Note</span>
+              <small>Optional</small>
+            </label>
+            <div class="input-wrap">
+              <input id="ledgerNote" type="text" placeholder="Example: Website changes / Fiverr payment" autocomplete="off" />
+            </div>
+          </div>
+
+          <div class="ledger-helper-actions">
+            <button id="ledgerUseLastBillBtn" class="chip-btn" type="button">Use Last Calculator Total as Bill</button>
+          </div>
+
+          <div class="session-section">
+            <div class="subsection-head">
+              <strong>Ledger History</strong>
+              <small id="ledgerHistoryCount">0 entries</small>
+            </div>
+            <div class="ledger-history" id="ledgerHistory">
+              <div class="empty-state">Open a client to view bills, payments, due balance, or credit.</div>
+            </div>
+          </div>
+        </div>
+
         <div class="subsection" id="billingSection">
 
           <div class="subsection-head">
 
             <strong>Billing Configuration</strong>
 
-            <small>Used for Minutes and Time Range</small>
+            <small>Used for Hrs & Min, Time Range, and Project Timer</small>
 
           </div>
 
@@ -2721,6 +3083,8 @@
     const timeTool = document.getElementById("timeTool");
 
     const percentageTool = document.getElementById("percentageTool");
+    const timerTool = document.getElementById("timerTool");
+    const ledgerTool = document.getElementById("ledgerTool");
 
     const billingSection = document.getElementById("billingSection");
 
@@ -2820,6 +3184,40 @@
     const resultCard = document.getElementById("resultCard");
 
 
+    const timerClientInput = document.getElementById("timerClient");
+    const timerProjectInput = document.getElementById("timerProject");
+    const timerStatusDot = document.getElementById("timerStatusDot");
+    const timerStatusText = document.getElementById("timerStatusText");
+    const timerSavedText = document.getElementById("timerSavedText");
+    const timerDisplay = document.getElementById("timerDisplay");
+    const timerEarnings = document.getElementById("timerEarnings");
+    const timerStartBtn = document.getElementById("timerStartBtn");
+    const timerPauseBtn = document.getElementById("timerPauseBtn");
+    const timerUseBtn = document.getElementById("timerUseBtn");
+    const timerClearBtn = document.getElementById("timerClearBtn");
+    const timerSessionList = document.getElementById("timerSessionList");
+    const timerSessionCount = document.getElementById("timerSessionCount");
+
+    const ledgerClientNameInput = document.getElementById("ledgerClientName");
+    const ledgerClientOptions = document.getElementById("ledgerClientOptions");
+    const ledgerCurrencyInput = document.getElementById("ledgerCurrency");
+    const ledgerOpenBtn = document.getElementById("ledgerOpenBtn");
+    const ledgerBilled = document.getElementById("ledgerBilled");
+    const ledgerReceived = document.getElementById("ledgerReceived");
+    const ledgerBalanceLabel = document.getElementById("ledgerBalanceLabel");
+    const ledgerBalance = document.getElementById("ledgerBalance");
+    const ledgerBalanceStatus = document.getElementById("ledgerBalanceStatus");
+    const ledgerBalanceCard = ledgerBalance.closest(".ledger-balance-card");
+    const ledgerBillAmountInput = document.getElementById("ledgerBillAmount");
+    const ledgerPaymentAmountInput = document.getElementById("ledgerPaymentAmount");
+    const ledgerNoteInput = document.getElementById("ledgerNote");
+    const ledgerAddBillBtn = document.getElementById("ledgerAddBillBtn");
+    const ledgerAddPaymentBtn = document.getElementById("ledgerAddPaymentBtn");
+    const ledgerUseLastBillBtn = document.getElementById("ledgerUseLastBillBtn");
+    const ledgerHistory = document.getElementById("ledgerHistory");
+    const ledgerHistoryCount = document.getElementById("ledgerHistoryCount");
+
+
 
     let mode = "minutes";
 
@@ -2828,22 +3226,30 @@
     let toastTimer = null;
     let receiptText = "";
 
+    let lastBillingAmount = 0;
+    let lastBillingCurrency = "$";
+    let lastBillingDurationMinutes = 0;
+
+    const TIMER_STORAGE_KEY = "maProjectTimerV2";
+    const LEDGER_STORAGE_KEY = "maClientLedgerV2";
+    let timerTickHandle = null;
+    let timerState = loadTimerState();
+    let ledgerState = loadLedgerState();
+
 
 
 
 
     function updateCopyButtonText() {
-
       if (mode === "percentage") {
-
         copyBtn.textContent = "Copy Percentage Details";
-
+      } else if (mode === "timer") {
+        copyBtn.textContent = "Copy Timer Summary";
+      } else if (mode === "ledger") {
+        copyBtn.textContent = "Copy Client Balance";
       } else {
-
         copyBtn.textContent = "Copy Charges Details";
-
       }
-
     }
 
 
@@ -2879,72 +3285,58 @@
 
 
     function setMode(nextMode) {
-
       mode = nextMode;
 
-
-
       navButtons.forEach((btn) => {
-
         btn.classList.toggle("active", btn.dataset.mode === mode);
-
       });
 
-
-
       minutesTool.classList.toggle("active", mode === "minutes");
-
       timeTool.classList.toggle("active", mode === "time");
-
       percentageTool.classList.toggle("active", mode === "percentage");
+      timerTool.classList.toggle("active", mode === "timer");
+      ledgerTool.classList.toggle("active", mode === "ledger");
 
-      billingSection.classList.toggle("hidden", mode === "percentage");
-
-
+      billingSection.classList.toggle("hidden", mode === "percentage" || mode === "ledger");
+      receiptBtn.style.display = (mode === "minutes" || mode === "time" || mode === "percentage") ? "" : "none";
+      resetBtn.style.display = (mode === "timer" || mode === "ledger") ? "none" : "";
+      copyBtn.style.gridColumn = (mode === "timer" || mode === "ledger") ? "1 / -1" : "auto";
 
       if (mode === "minutes") {
-
         panelTitle.textContent = "Hours & Minutes Calculator";
-
-        panelDesc.textContent = "Enter hours and minutes, then add hourly rate and currency. The result updates live.";
-
+        panelDesc.textContent = "Hours are optional. Enter only minutes if you want — even 90, 125, or more — and it will convert automatically.";
         panelChip.textContent = "Charges";
-
       }
-
-
 
       if (mode === "time") {
-
         panelTitle.textContent = "Time Range Calculator";
-
         panelDesc.textContent = "Select start and end time. Overnight time ranges are supported automatically.";
-
         panelChip.textContent = "Time Range";
-
       }
-
-
 
       if (mode === "percentage") {
-
         panelTitle.textContent = "Percentage Calculator";
-
         panelDesc.textContent = "Enter total amount and percentage. Rate and currency are not used in this mode.";
-
         panelChip.textContent = "Percentage";
-
       }
 
+      if (mode === "timer") {
+        panelTitle.textContent = "Project Timer";
+        panelDesc.textContent = "Start, pause, leave, and resume later. Your project time and sessions stay saved in this browser.";
+        panelChip.textContent = "Work Tracker";
+        renderTimer();
+      }
 
+      if (mode === "ledger") {
+        panelTitle.textContent = "Client Ledger";
+        panelDesc.textContent = "Track bills, payments, amount still due, and extra client credit automatically.";
+        panelChip.textContent = "Payments";
+        renderLedger();
+      }
 
       updateCopyButtonText();
-
       calculate();
-
     }
-
-
 
     function parseTimeToMinutes(value) {
 
@@ -2978,7 +3370,7 @@
 
     function addMinutesToDuration(extraMinutes) {
       const hours = Math.max(0, Number(hoursInput.value) || 0);
-      const minutes = Math.min(59, Math.max(0, Number(minutesInput.value) || 0));
+      const minutes = Math.max(0, Number(minutesInput.value) || 0);
       const currentTotal = (hours * 60) + minutes;
       setHoursMinutesFromTotal(currentTotal + extraMinutes);
       setMode("minutes");
@@ -3008,8 +3400,7 @@
           !Number.isFinite(hours) ||
           !Number.isFinite(minutes) ||
           hours < 0 ||
-          minutes < 0 ||
-          minutes > 59
+          minutes < 0
         ) return NaN;
 
 
@@ -3053,6 +3444,9 @@
       currencyOut.textContent = currency;
 
       mainAmount.textContent = amount.toFixed(2);
+      lastBillingAmount = amount;
+      lastBillingCurrency = currency;
+      lastBillingDurationMinutes = durationMinutes;
 
 
 
@@ -3336,6 +3730,490 @@
     }
 
 
+
+    function safeJsonParse(value, fallback) {
+      try {
+        const parsed = JSON.parse(value);
+        return parsed && typeof parsed === "object" ? parsed : fallback;
+      } catch (error) {
+        return fallback;
+      }
+    }
+
+    function loadTimerState() {
+      const fallback = {
+        client: "",
+        project: "",
+        accumulatedMs: 0,
+        running: false,
+        currentStart: null,
+        sessions: []
+      };
+      const stored = safeJsonParse(localStorage.getItem(TIMER_STORAGE_KEY), fallback);
+      return {
+        client: typeof stored.client === "string" ? stored.client : "",
+        project: typeof stored.project === "string" ? stored.project : "",
+        accumulatedMs: Math.max(0, Number(stored.accumulatedMs) || 0),
+        running: Boolean(stored.running),
+        currentStart: stored.currentStart ? Number(stored.currentStart) : null,
+        sessions: Array.isArray(stored.sessions) ? stored.sessions : []
+      };
+    }
+
+    function saveTimerState() {
+      timerState.client = timerClientInput.value.trim();
+      timerState.project = timerProjectInput.value.trim();
+      localStorage.setItem(TIMER_STORAGE_KEY, JSON.stringify(timerState));
+    }
+
+    function getTimerTotalMs() {
+      const runningMs = timerState.running && timerState.currentStart
+        ? Math.max(0, Date.now() - timerState.currentStart)
+        : 0;
+      return Math.max(0, timerState.accumulatedMs + runningMs);
+    }
+
+    function formatClock(ms) {
+      const totalSeconds = Math.floor(Math.max(0, ms) / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      return [hours, minutes, seconds].map((value) => String(value).padStart(2, "0")).join(":");
+    }
+
+    function formatTimeOfDay(timestamp) {
+      return new Date(timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    }
+
+    function formatShortDate(timestamp) {
+      return new Date(timestamp).toLocaleDateString([], { month: "short", day: "2-digit" });
+    }
+
+    function ensureTimerInterval() {
+      if (timerTickHandle) clearInterval(timerTickHandle);
+      timerTickHandle = setInterval(() => {
+        if (timerState.running) {
+          renderTimer(false);
+          if (mode === "timer") updateTimerResultCard();
+        }
+      }, 1000);
+    }
+
+    function startTimer() {
+      if (timerState.running) return;
+      timerState.client = timerClientInput.value.trim();
+      timerState.project = timerProjectInput.value.trim();
+      timerState.running = true;
+      timerState.currentStart = Date.now();
+      saveTimerState();
+      renderTimer();
+      showToast(timerState.accumulatedMs > 0 ? "Work resumed." : "Work timer started.");
+    }
+
+    function pauseTimer() {
+      if (!timerState.running || !timerState.currentStart) return;
+      const end = Date.now();
+      const start = timerState.currentStart;
+      const durationMs = Math.max(0, end - start);
+
+      timerState.accumulatedMs += durationMs;
+      timerState.sessions.push({
+        id: String(end) + "-" + Math.random().toString(36).slice(2, 7),
+        start,
+        end,
+        durationMs
+      });
+      timerState.running = false;
+      timerState.currentStart = null;
+      saveTimerState();
+      renderTimer();
+      showToast("Session paused and saved.");
+    }
+
+    function clearTimerProject() {
+      if (!confirm("Clear this project timer and all saved sessions?")) return;
+      timerState = {
+        client: "",
+        project: "",
+        accumulatedMs: 0,
+        running: false,
+        currentStart: null,
+        sessions: []
+      };
+      localStorage.removeItem(TIMER_STORAGE_KEY);
+      timerClientInput.value = "";
+      timerProjectInput.value = "";
+      renderTimer();
+      showToast("Project timer cleared.");
+    }
+
+    function editTimerSession(sessionId) {
+      const session = timerState.sessions.find((item) => item.id === sessionId);
+      if (!session) return;
+      const currentMinutes = Math.max(0, Math.round((Number(session.durationMs) || 0) / 60000));
+      const answer = prompt("Enter session duration in minutes:", String(currentMinutes));
+      if (answer === null) return;
+      const newMinutes = Number(answer);
+      if (!Number.isFinite(newMinutes) || newMinutes < 0) {
+        showToast("Enter valid minutes.", "error");
+        return;
+      }
+      const oldMs = Math.max(0, Number(session.durationMs) || 0);
+      const newMs = Math.round(newMinutes * 60000);
+      session.durationMs = newMs;
+      session.end = Number(session.start) + newMs;
+      timerState.accumulatedMs = Math.max(0, timerState.accumulatedMs - oldMs + newMs);
+      saveTimerState();
+      renderTimer();
+      showToast("Session updated.");
+    }
+
+    function deleteTimerSession(sessionId) {
+      const session = timerState.sessions.find((item) => item.id === sessionId);
+      if (!session) return;
+      const durationMs = Math.max(0, Number(session.durationMs) || 0);
+      timerState.sessions = timerState.sessions.filter((item) => item.id !== sessionId);
+      timerState.accumulatedMs = Math.max(0, timerState.accumulatedMs - durationMs);
+      saveTimerState();
+      renderTimer();
+      showToast("Session deleted.");
+    }
+
+    function useTimerInCalculator() {
+      const totalMinutes = Math.max(0, Math.round(getTimerTotalMs() / 60000));
+      if (totalMinutes <= 0) {
+        showToast("No project time recorded yet.", "error");
+        return;
+      }
+      setHoursMinutesFromTotal(totalMinutes);
+      setMode("minutes");
+      showToast("Project time moved to Hours & Minutes calculator.");
+    }
+
+    function renderTimer(renderSessions = true) {
+      if (document.activeElement !== timerClientInput) timerClientInput.value = timerState.client || "";
+      if (document.activeElement !== timerProjectInput) timerProjectInput.value = timerState.project || "";
+
+      const totalMs = getTimerTotalMs();
+      const rate = Math.max(0, Number(rateInput.value) || 0);
+      const currency = currencyInput.value || "$";
+      const charges = (totalMs / 3600000) * rate;
+
+      timerDisplay.textContent = formatClock(totalMs);
+      timerEarnings.textContent = currency + " " + charges.toFixed(2);
+      timerStatusText.textContent = timerState.running ? "Running" : (totalMs > 0 ? "Paused" : "Ready");
+      timerStatusDot.classList.toggle("running", timerState.running);
+      timerSavedText.textContent = timerState.running ? "Timer continues if you leave this page" : "Saved in this browser";
+      timerStartBtn.textContent = timerState.running ? "Running…" : (totalMs > 0 ? "Resume Work" : "Start Work");
+      timerStartBtn.disabled = timerState.running;
+      timerPauseBtn.disabled = !timerState.running;
+      timerUseBtn.disabled = totalMs <= 0;
+
+      if (renderSessions) {
+        const sessions = [...timerState.sessions].reverse();
+        timerSessionCount.textContent = timerState.sessions.length + (timerState.sessions.length === 1 ? " session" : " sessions");
+        if (!sessions.length) {
+          timerSessionList.innerHTML = '<div class="empty-state">Start the timer to create your first work session.</div>';
+        } else {
+          timerSessionList.innerHTML = sessions.map((session) => {
+            const durationMinutes = Math.max(0, Math.round((Number(session.durationMs) || 0) / 60000));
+            return '<div class="session-item">' +
+              '<div><strong>' + escapeReceiptHtml(formatReceiptDuration(durationMinutes)) + '</strong>' +
+              '<span>' + escapeReceiptHtml(formatShortDate(session.start) + " • " + formatTimeOfDay(session.start) + " – " + formatTimeOfDay(session.end)) + '</span></div>' +
+              '<div class="mini-action-row">' +
+              '<button class="mini-action-btn" type="button" data-edit-session="' + escapeReceiptHtml(session.id) + '">Edit</button>' +
+              '<button class="mini-action-btn danger" type="button" data-delete-session="' + escapeReceiptHtml(session.id) + '">Delete</button>' +
+              '</div></div>';
+          }).join("");
+        }
+      }
+
+      if (mode === "timer") updateTimerResultCard();
+    }
+
+    function updateTimerResultCard() {
+      const totalMs = getTimerTotalMs();
+      const totalMinutes = Math.max(0, Math.round(totalMs / 60000));
+      const rate = Math.max(0, Number(rateInput.value) || 0);
+      const currency = currencyInput.value || "$";
+      const charges = (totalMs / 3600000) * rate;
+
+      summaryTitle.textContent = "Project Timer";
+      modePill.textContent = timerState.running ? "Running" : (totalMs > 0 ? "Paused" : "Ready");
+      amountLabel.textContent = "Live Charges";
+      currencyOut.style.display = "inline";
+      currencyOut.textContent = currency;
+      mainAmount.textContent = charges.toFixed(2);
+
+      k1Label.textContent = "Total Time";
+      k1Value.textContent = totalMinutes > 0 ? formatReceiptDuration(totalMinutes) : "0m";
+      k2Label.textContent = "Sessions";
+      k2Value.textContent = String(timerState.sessions.length + (timerState.running ? 1 : 0));
+      k3Label.textContent = "Hourly Rate";
+      k3Value.textContent = currency + " " + rate.toFixed(2);
+      k4Label.textContent = "Project";
+      k4Value.textContent = timerState.project || "Not set";
+      formulaText.textContent = "Project Charges = Tracked Time × Hourly Rate";
+      insightBox.innerHTML = timerState.running
+        ? "<b>Status:</b> Timer is running. You can leave and return later; elapsed time is preserved."
+        : "<b>Status:</b> Pause/resume creates separate work sessions. Use total time in the calculator whenever you are ready.";
+      receiptLines.classList.add("show");
+      receiptLine1Label.textContent = "Client";
+      receiptLine1Value.textContent = timerState.client || "—";
+      receiptLine2Label.textContent = "Project";
+      receiptLine2Value.textContent = timerState.project || "—";
+      clearHighlights();
+
+      copyText =
+        "MUHAMMAD ALI PROJECT TIMER\n" +
+        "\nClient: " + (timerState.client || "—") +
+        "\nProject: " + (timerState.project || "—") +
+        "\nTotal Time: " + (totalMinutes > 0 ? formatReceiptDuration(totalMinutes) : "0m") +
+        "\nSessions: " + timerState.sessions.length +
+        "\nHourly Rate: " + currency + " " + rate.toFixed(2) + " / hour" +
+        "\nCurrent Charges: " + currency + " " + charges.toFixed(2);
+    }
+
+    function loadLedgerState() {
+      const fallback = { clients: {}, activeKey: "" };
+      const stored = safeJsonParse(localStorage.getItem(LEDGER_STORAGE_KEY), fallback);
+      return {
+        clients: stored.clients && typeof stored.clients === "object" ? stored.clients : {},
+        activeKey: typeof stored.activeKey === "string" ? stored.activeKey : ""
+      };
+    }
+
+    function saveLedgerState() {
+      localStorage.setItem(LEDGER_STORAGE_KEY, JSON.stringify(ledgerState));
+    }
+
+    function normalizeClientKey(name) {
+      return String(name || "").trim().toLowerCase().replace(/\s+/g, " ");
+    }
+
+    function getActiveClient() {
+      return ledgerState.activeKey ? ledgerState.clients[ledgerState.activeKey] || null : null;
+    }
+
+    function refreshLedgerClientOptions() {
+      const clients = Object.values(ledgerState.clients).sort((a, b) => String(a.name).localeCompare(String(b.name)));
+      ledgerClientOptions.innerHTML = clients.map((client) => '<option value="' + escapeReceiptHtml(client.name) + '"></option>').join("");
+    }
+
+    function openOrCreateLedgerClient() {
+      const name = ledgerClientNameInput.value.trim();
+      if (!name) {
+        showToast("Enter a client name first.", "error");
+        return;
+      }
+      const key = normalizeClientKey(name);
+      const isNewClient = !ledgerState.clients[key];
+      if (isNewClient) {
+        ledgerState.clients[key] = {
+          name,
+          currency: ledgerCurrencyInput.value || "$",
+          transactions: []
+        };
+        showToast("Client created.");
+      }
+      ledgerState.activeKey = key;
+      ledgerState.clients[key].name = name;
+      if (!isNewClient) {
+        ledgerCurrencyInput.value = ledgerState.clients[key].currency || "$";
+      }
+      saveLedgerState();
+      renderLedger();
+    }
+
+    function calculateClientTotals(client) {
+      const transactions = Array.isArray(client?.transactions) ? client.transactions : [];
+      let billed = 0;
+      let received = 0;
+      transactions.forEach((tx) => {
+        const amount = Math.max(0, Number(tx.amount) || 0);
+        if (tx.type === "bill") billed += amount;
+        if (tx.type === "payment") received += amount;
+      });
+      return { billed, received, balance: billed - received };
+    }
+
+    function addLedgerTransaction(type, rawAmount) {
+      const client = getActiveClient();
+      if (!client) {
+        showToast("Open or create a client first.", "error");
+        return;
+      }
+      const amount = Number(rawAmount);
+      if (!Number.isFinite(amount) || amount <= 0) {
+        showToast("Enter a valid amount greater than zero.", "error");
+        return;
+      }
+      client.currency = ledgerCurrencyInput.value || client.currency || "$";
+      client.transactions = Array.isArray(client.transactions) ? client.transactions : [];
+      client.transactions.push({
+        id: String(Date.now()) + "-" + Math.random().toString(36).slice(2, 7),
+        type,
+        amount,
+        note: ledgerNoteInput.value.trim(),
+        date: Date.now()
+      });
+      saveLedgerState();
+      ledgerBillAmountInput.value = "";
+      ledgerPaymentAmountInput.value = "";
+      ledgerNoteInput.value = "";
+      renderLedger();
+      showToast(type === "bill" ? "Bill added." : "Payment added.");
+    }
+
+    function deleteLedgerTransaction(transactionId) {
+      const client = getActiveClient();
+      if (!client) return;
+      client.transactions = (client.transactions || []).filter((tx) => tx.id !== transactionId);
+      saveLedgerState();
+      renderLedger();
+      showToast("Ledger entry deleted.");
+    }
+
+    function useLastCalculatorTotalAsBill() {
+      if (!(lastBillingAmount > 0)) {
+        showToast("Calculate some billable time first.", "error");
+        return;
+      }
+      const client = getActiveClient();
+      if (!client) {
+        showToast("Open or create a client first.", "error");
+        return;
+      }
+      ledgerCurrencyInput.value = lastBillingCurrency || ledgerCurrencyInput.value;
+      ledgerBillAmountInput.value = lastBillingAmount.toFixed(2);
+      ledgerNoteInput.value = "Calculator time: " + formatReceiptDuration(lastBillingDurationMinutes);
+      showToast("Last calculator total loaded into Bill Amount.");
+    }
+
+    function renderLedger() {
+      refreshLedgerClientOptions();
+      const client = getActiveClient();
+
+      if (!client) {
+        ledgerBilled.textContent = "$ 0.00";
+        ledgerReceived.textContent = "$ 0.00";
+        ledgerBalanceLabel.textContent = "Balance";
+        ledgerBalance.textContent = "$ 0.00";
+        ledgerBalanceStatus.textContent = "Select a client";
+        ledgerBalanceCard.classList.remove("due", "credit");
+        ledgerHistoryCount.textContent = "0 entries";
+        ledgerHistory.innerHTML = '<div class="empty-state">Open a client to view bills, payments, due balance, or credit.</div>';
+        if (mode === "ledger") updateLedgerResultCard();
+        return;
+      }
+
+      if (document.activeElement !== ledgerClientNameInput) ledgerClientNameInput.value = client.name || "";
+      ledgerCurrencyInput.value = client.currency || "$";
+      const totals = calculateClientTotals(client);
+      const currency = client.currency || "$";
+
+      ledgerBilled.textContent = currency + " " + totals.billed.toFixed(2);
+      ledgerReceived.textContent = currency + " " + totals.received.toFixed(2);
+      ledgerBalanceCard.classList.remove("due", "credit");
+
+      if (totals.balance > 0.005) {
+        ledgerBalanceLabel.textContent = "Amount Due";
+        ledgerBalance.textContent = currency + " " + totals.balance.toFixed(2);
+        ledgerBalanceStatus.textContent = "Client still needs to pay";
+        ledgerBalanceCard.classList.add("due");
+      } else if (totals.balance < -0.005) {
+        ledgerBalanceLabel.textContent = "Client Credit";
+        ledgerBalance.textContent = currency + " " + Math.abs(totals.balance).toFixed(2);
+        ledgerBalanceStatus.textContent = "Use this credit against the next bill";
+        ledgerBalanceCard.classList.add("credit");
+      } else {
+        ledgerBalanceLabel.textContent = "Balance";
+        ledgerBalance.textContent = currency + " 0.00";
+        ledgerBalanceStatus.textContent = "Paid in full";
+      }
+
+      const transactions = [...(client.transactions || [])].reverse();
+      ledgerHistoryCount.textContent = transactions.length + (transactions.length === 1 ? " entry" : " entries");
+      if (!transactions.length) {
+        ledgerHistory.innerHTML = '<div class="empty-state">No bills or payments yet.</div>';
+      } else {
+        ledgerHistory.innerHTML = transactions.map((tx) => {
+          const amount = Math.max(0, Number(tx.amount) || 0);
+          const isBill = tx.type === "bill";
+          const sign = isBill ? "+" : "−";
+          return '<div class="ledger-history-item">' +
+            '<div><strong>' + (isBill ? "Bill" : "Payment Received") + '</strong>' +
+            '<span>' + escapeReceiptHtml(formatShortDate(tx.date) + (tx.note ? " • " + tx.note : "")) + '</span></div>' +
+            '<div class="mini-action-row"><div class="ledger-history-amount ' + (isBill ? "bill" : "payment") + '"><strong>' + sign + currency + " " + amount.toFixed(2) + '</strong></div>' +
+            '<button class="mini-action-btn danger" type="button" data-delete-ledger="' + escapeReceiptHtml(tx.id) + '">Delete</button></div>' +
+            '</div>';
+        }).join("");
+      }
+
+      if (mode === "ledger") updateLedgerResultCard();
+    }
+
+    function updateLedgerResultCard() {
+      const client = getActiveClient();
+      summaryTitle.textContent = "Client Balance";
+      modePill.textContent = "Ledger";
+      amountLabel.textContent = "Current Balance";
+      currencyOut.style.display = "inline";
+
+      if (!client) {
+        currencyOut.textContent = "$";
+        mainAmount.textContent = "0.00";
+        k1Label.textContent = "Total Billed";
+        k1Value.textContent = "$ 0.00";
+        k2Label.textContent = "Received";
+        k2Value.textContent = "$ 0.00";
+        k3Label.textContent = "Status";
+        k3Value.textContent = "No Client";
+        k4Label.textContent = "Client";
+        k4Value.textContent = "—";
+        formulaText.textContent = "Balance = Total Bills − Total Payments";
+        insightBox.innerHTML = "<b>Status:</b> Open or create a client to start tracking payments.";
+        copyText = "No client selected.";
+        return;
+      }
+
+      const totals = calculateClientTotals(client);
+      const currency = client.currency || "$";
+      const isCredit = totals.balance < -0.005;
+      const isDue = totals.balance > 0.005;
+      const displayBalance = Math.abs(totals.balance);
+
+      currencyOut.textContent = currency;
+      mainAmount.textContent = displayBalance.toFixed(2);
+      amountLabel.textContent = isCredit ? "Client Credit" : (isDue ? "Amount Due" : "Paid in Full");
+      k1Label.textContent = "Total Billed";
+      k1Value.textContent = currency + " " + totals.billed.toFixed(2);
+      k2Label.textContent = "Total Received";
+      k2Value.textContent = currency + " " + totals.received.toFixed(2);
+      k3Label.textContent = "Status";
+      k3Value.textContent = isCredit ? "CREDIT" : (isDue ? "DUE" : "PAID");
+      k4Label.textContent = "Client";
+      k4Value.textContent = client.name;
+      formulaText.textContent = "Balance = Total Bills − Total Payments";
+      insightBox.innerHTML = isCredit
+        ? "<b>Credit:</b> Client has paid extra. The credit automatically reduces their next bill."
+        : (isDue ? "<b>Due:</b> This is the remaining amount the client still needs to pay." : "<b>Status:</b> Client is fully paid.");
+      receiptLines.classList.add("show");
+      receiptLine1Label.textContent = "Transactions";
+      receiptLine1Value.textContent = String((client.transactions || []).length);
+      receiptLine2Label.textContent = "Client";
+      receiptLine2Value.textContent = client.name;
+      clearHighlights();
+      k3Value.parentElement.classList.add("highlight");
+
+      copyText =
+        "MUHAMMAD ALI CLIENT LEDGER\n" +
+        "\nClient: " + client.name +
+        "\nTotal Billed: " + currency + " " + totals.billed.toFixed(2) +
+        "\nTotal Received: " + currency + " " + totals.received.toFixed(2) +
+        "\nStatus: " + (isCredit ? "CREDIT " + currency + " " + displayBalance.toFixed(2) : (isDue ? "DUE " + currency + " " + displayBalance.toFixed(2) : "PAID IN FULL"));
+    }
+
     function formatReceiptDuration(totalMinutes) {
       const rounded = Math.round(totalMinutes);
       const hours = Math.floor(rounded / 60);
@@ -3385,6 +4263,10 @@
     }
 
     function buildReceipt() {
+      if (mode === "timer" || mode === "ledger") {
+        showToast("Use the calculator modes to generate a receipt.", "error");
+        return false;
+      }
       calculate();
 
       const now = new Date();
@@ -3674,17 +4556,16 @@ function resetCalculator() {
 }
 
     function calculate() {
-
       if (mode === "percentage") {
-
         calculatePercentage();
-
+      } else if (mode === "timer") {
+        renderTimer(false);
+        updateTimerResultCard();
+      } else if (mode === "ledger") {
+        updateLedgerResultCard();
       } else {
-
         calculateBilling();
-
       }
-
     }
 
 
@@ -3899,7 +4780,6 @@ function resetCalculator() {
       if (minutesInput.value === "") return;
       const value = Number(minutesInput.value);
       if (value < 0) minutesInput.value = 0;
-      if (value > 59) minutesInput.value = 59;
     });
 
 
@@ -3931,6 +4811,50 @@ function resetCalculator() {
     });
 
 
+
+
+    timerClientInput.addEventListener("input", () => {
+      timerState.client = timerClientInput.value;
+      saveTimerState();
+      if (mode === "timer") updateTimerResultCard();
+    });
+
+    timerProjectInput.addEventListener("input", () => {
+      timerState.project = timerProjectInput.value;
+      saveTimerState();
+      if (mode === "timer") updateTimerResultCard();
+    });
+
+    timerStartBtn.addEventListener("click", startTimer);
+    timerPauseBtn.addEventListener("click", pauseTimer);
+    timerUseBtn.addEventListener("click", useTimerInCalculator);
+    timerClearBtn.addEventListener("click", clearTimerProject);
+
+    timerSessionList.addEventListener("click", (event) => {
+      const editButton = event.target.closest("[data-edit-session]");
+      const deleteButton = event.target.closest("[data-delete-session]");
+      if (editButton) editTimerSession(editButton.dataset.editSession);
+      if (deleteButton) deleteTimerSession(deleteButton.dataset.deleteSession);
+    });
+
+    ledgerOpenBtn.addEventListener("click", openOrCreateLedgerClient);
+    ledgerAddBillBtn.addEventListener("click", () => addLedgerTransaction("bill", ledgerBillAmountInput.value));
+    ledgerAddPaymentBtn.addEventListener("click", () => addLedgerTransaction("payment", ledgerPaymentAmountInput.value));
+    ledgerUseLastBillBtn.addEventListener("click", useLastCalculatorTotalAsBill);
+
+    ledgerCurrencyInput.addEventListener("change", () => {
+      const client = getActiveClient();
+      if (client) {
+        client.currency = ledgerCurrencyInput.value || "$";
+        saveLedgerState();
+        renderLedger();
+      }
+    });
+
+    ledgerHistory.addEventListener("click", (event) => {
+      const deleteButton = event.target.closest("[data-delete-ledger]");
+      if (deleteButton) deleteLedgerTransaction(deleteButton.dataset.deleteLedger);
+    });
 
     resultCard.addEventListener("mousemove", (event) => {
 
@@ -3990,6 +4914,16 @@ function resetCalculator() {
     });
 
 
+
+    refreshLedgerClientOptions();
+    if (timerState.running && !timerState.currentStart) {
+      timerState.running = false;
+    }
+    timerClientInput.value = timerState.client || "";
+    timerProjectInput.value = timerState.project || "";
+    renderTimer();
+    renderLedger();
+    ensureTimerInterval();
 
     updateCopyButtonText();
 
